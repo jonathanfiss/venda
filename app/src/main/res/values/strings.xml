@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Vendas</string>
+    <string name="hint_senha">senha</string>
+    <string name="hint_email">Email</string>
+    <string name="contentDescription">Logo da empresa</string>
+    <string name="bt_sigin">Sing In</string>
+    <string name="bt_sigup">Sing Up</string>
+    <string name="password_fail">Senha não cadastrada.</string>
+    <string name="email_fail">Email não cadastrado.</string>
+    <string name="email_already">Email já cadastrado.</string>
+    <string name="signup_fail">Sign UP falhou. A internet está conectada?</string>
+    <string name="hint_estoque">Estoque</string>
+    <string name="hint_nome">nome</string>
+    <string name="content_description_foto_produto">foto do produto</string>
+    <string name="hint_valor">Valor</string>
+</resources>
