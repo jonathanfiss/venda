@@ -13,4 +13,5 @@
     <string name="hint_nome">nome</string>
     <string name="content_description_foto_produto">foto do produto</string>
     <string name="hint_valor">Valor</string>
+    <string name="hint_cpf">CPF</string>
 </resources>

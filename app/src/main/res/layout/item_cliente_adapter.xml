@@ -28,23 +28,6 @@
 
 
             <TextView
-                android:id="@+id/tvSobrenomeClientesAdapter"
-                android:layout_width="121dp"
-                android:layout_height="24dp"
-                android:layout_gravity="start"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:hint="@string/hint_nome"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/imvFotoClienteAdapter"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
                 android:id="@+id/tvNomeClientesAdapter"
                 android:layout_width="142dp"
                 android:layout_height="24dp"
@@ -73,7 +56,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0"
-                app:srcCompat="@drawable/img_carrinho_de_compras" />
+                app:srcCompat="@drawable/img_cliente_icon_524x524" />
 
             <TextView
                 android:id="@+id/tvCPFItemAdapter"
