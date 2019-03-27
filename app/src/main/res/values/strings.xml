@@ -14,4 +14,15 @@
     <string name="content_description_foto_produto">foto do produto</string>
     <string name="hint_valor">Valor</string>
     <string name="hint_cpf">CPF</string>
+    <string name="menu_nav_carrinho">Carrinho</string>
+    <string name="menu_nav_lista_de_clientes">Lista de Clientes</string>
+    <string name="menu_nav_produto_admin">Produtos</string>
+    <string name="menu_nav_cliente_admin">Clientes</string>
+    <string name="menu_nav_sobre">Sobre</string>
+    <string name="menu_nav_sair">Sair</string>
+    <string name="action_settings">configurações</string>
+    <string name="menu_vender">menu de vendas</string>
+    <string name="menu_cancelar">Cancelar</string>
+    <string name="menu_pesquisar">Pesquisar</string>
+    <string name="title_menu_lercodigodebarras">Codigo de Barras</string>
 </resources>
