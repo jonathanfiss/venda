@@ -3,8 +3,10 @@ package br.edu.ifsul.vendas.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,6 +32,7 @@ public class ProdutosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_produtos);
 
         lvProdutos = findViewById(R.id.lv_produtos);
+        lvProdutos.setOnItemClickListener(New o);
 
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -59,5 +62,27 @@ public class ProdutosActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+    }
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_activity_produtos, menu);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menuitem_pesquisar).getActionView();
+        searchView.setQueryHint(getString(R.string.hint_nome_searchview));
+        searchView.setOnQueryTextListener(new SearchView.OnCloseListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query);
+            return true;
+        }
+            @Override
+                public boolean onQueryTextChange(String newText){
+            List<Produto> produtosTemp = new ArrayList<>();
+            for(Produto produto : produtos){
+                if (produto.getNome().contains(newText)){
+                    produtosTemp.add(produto);
+                }
+
+            }
+        }
+
+        );
     }
 }
