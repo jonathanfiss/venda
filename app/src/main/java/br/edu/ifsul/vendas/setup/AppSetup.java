@@ -10,6 +10,7 @@ import br.edu.ifsul.vendas.model.Produto;
 public class AppSetup {
 
     public static List<Produto> produtos = new ArrayList<>();
+    public static List<Cliente> clientes = new ArrayList<>();
     public static Cliente cliente = null;
     public static List<ItemPedido> carrinho = new ArrayList<>();
 }

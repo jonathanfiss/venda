@@ -6,6 +6,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +14,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,6 +33,7 @@ import br.edu.ifsul.vendas.setup.AppSetup;
 public class ProdutosActivity extends AppCompatActivity {
 
     private static final String TAG = "produtosactivity";
+    private static final int RC_BARCODE_CAPTURE = 1;
     private ListView lvProdutos;
 
     @Override
@@ -40,10 +43,9 @@ public class ProdutosActivity extends AppCompatActivity {
 
         lvProdutos = findViewById(R.id.lv_produtos);
         lvProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ProdutosActivity.this, ProdutosDetalheActivity.class);
+                Intent intent = new Intent(ProdutosActivity.this, ProdutoDetalheActivity.class);
                 intent.putExtra("position", position);
                 startActivity(intent);
             }
@@ -105,7 +107,7 @@ public class ProdutosActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(Menu.Item item){
+    public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.menuitem_barcode:
                 Intent intent = new Intent(ProdutosActivity.this, BarcodeCaptureActivity.class);

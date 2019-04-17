@@ -25,4 +25,27 @@
     <string name="menu_cancelar">Cancelar</string>
     <string name="menu_pesquisar">Pesquisar</string>
     <string name="title_menu_lercodigodebarras">Codigo de Barras</string>
+    <string name="hint_nome_searchview">Procurar...</string>
+    <string name="foto_do_produto">foto produto</string>
+    <string name="hint_valor_produto">Valor</string>
+    <string name="hint_estoque_produto">Estoque</string>
+    <string name="hint_nome_produto">Nome produto</string>
+    <string name="bt_vender">Vender</string>
+    <string name="hint_descricao_produto">Descrição do produto</string>
+    <string name="hint_quantos">Quantidade</string>
+    <string name="hint_vendedor">Nome Vendedor</string>
+    <string name="label_estoque">R$</string>
+    <string name="toast_adicionado_ao_carrinho">Produto adicionado com sucesso</string>
+    <string name="barcode_error">Error reading barcode: %1$s</string>
+    <string name="permission_camera_rationale">Acesso a camera é necessario</string>
+    <string name="low_storage_error">As dependências do detector de face não podem ser baixadas devido ao baixo armazenamento do dispositivo</string>
+    <string name="ok">OK</string>
+    <string name="no_camera_permission">Este aplicativo não pode ser executado porque não possui a permissão da câmera. O aplicativo será encerrado agora.</string>
+    <string name="title_selecionar_cliente">Confirma este cliente</string>
+    <string name="message_nome_cliente">nome</string>
+    <string name="message_cpf_cliente">CPF:</string>
+    <string name="alertdialog_sim">Sim</string>
+    <string name="toast_cliente_selecionado">Cliente Selecionado</string>
+    <string name="alertdialog_nao">Não</string>
+    <string name="snack_operacao_cancelada">Operação Cancelada</string>
 </resources>

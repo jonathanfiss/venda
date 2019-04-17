@@ -15,9 +15,7 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import br.edu.ifsul.vendas.R;
-import br.edu.ifsul.vendas.activity.CarrinhoActivity;
 import br.edu.ifsul.vendas.model.ItemPedido;
-import br.edu.ifsul.vendas.model.Produto;
 
 public class CarrinhoAdapter extends ArrayAdapter<ItemPedido> {
     private final Context context;

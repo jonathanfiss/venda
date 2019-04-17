@@ -66,7 +66,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
         // obtém a referência do database e do nó
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("vendas/produtos/" + produto.getKey() + "/quantidade");
+        DatabaseReference myRef = database.getReference("produtos/" + produto.getKey() + "/quantidade");
         // Escuta o database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
