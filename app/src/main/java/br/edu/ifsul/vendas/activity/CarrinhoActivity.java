@@ -32,13 +32,8 @@ public class CarrinhoActivity extends AppCompatActivity {
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
 
         lv_carrinho = findViewById(R.id.lv_carrinho);
-        lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));;;;;;;
+        atualizaView();
         Log.d("retorno",AppSetup.carrinho.toString());
-
-        for (ItemPedido itemPedido : AppSetup.carrinho){
-        total = total + itemPedido.getTotalItem();
-        }
-
         tvTotalPedidoCarrinho.setText(String.valueOf(total));
         tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" "+AppSetup.cliente.getSobrenome())));
     }
@@ -47,6 +42,12 @@ public class CarrinhoActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_activity_carrinho, menu);
 
         return true;
+    }
+    public void atualizaView(){
+        lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
+        for (ItemPedido itemPedido : AppSetup.carrinho){
+            total = total + itemPedido.getTotalItem();
+        }
     }
 }
 //separar em atualiza view

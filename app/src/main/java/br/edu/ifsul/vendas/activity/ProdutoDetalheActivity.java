@@ -64,6 +64,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
             //carrega a imagem aqui
         }
 
+
         // obtém a referência do database e do nó
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("produtos/" + produto.getKey() + "/quantidade");
@@ -81,7 +82,6 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
             }
         });
-
         btVender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
