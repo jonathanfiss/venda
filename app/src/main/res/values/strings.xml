@@ -48,4 +48,7 @@
     <string name="toast_cliente_selecionado">Cliente Selecionado</string>
     <string name="alertdialog_nao">Não</string>
     <string name="snack_operacao_cancelada">Operação Cancelada</string>
+    <string name="title_confimar">Confirmação</string>
+    <string name="message_confirma_cancelar">Você tem certeza que deseja cancelar a compra?</string>
+    <string name="message_confirma_salvar">Você deseja finalizar o pedido?</string>
 </resources>

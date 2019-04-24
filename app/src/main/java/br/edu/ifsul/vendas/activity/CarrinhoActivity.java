@@ -1,22 +1,20 @@
 package br.edu.ifsul.vendas.activity;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.SearchView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.CarrinhoAdapter;
-import br.edu.ifsul.vendas.adapter.ClientesAdapter;
-import br.edu.ifsul.vendas.model.Cliente;
 import br.edu.ifsul.vendas.model.ItemPedido;
 import br.edu.ifsul.vendas.setup.AppSetup;
+
 
 public class CarrinhoActivity extends AppCompatActivity {
 
@@ -27,29 +25,85 @@ public class CarrinhoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
-
         TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
 
         lv_carrinho = findViewById(R.id.lv_carrinho);
         atualizaView();
-        Log.d("retorno",AppSetup.carrinho.toString());
         tvTotalPedidoCarrinho.setText(String.valueOf(total));
-        tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" "+AppSetup.cliente.getSobrenome())));
+        Log.d("retorno", AppSetup.carrinho.toString());
+
+        tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" " + AppSetup.cliente.getSobrenome())));
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_carrinho, menu);
 
         return true;
     }
-    public void atualizaView(){
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menuitem_salvar:
+                confirmaSalvar();
+                break;
+            case R.id.menuitem_cancelar:
+                confirmaCancelar();
+                break;
+        }
+        return true;
+    }
+
+    private void confirmaCancelar() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.title_confimar);
+        builder.setMessage(R.string.message_confirma_cancelar);
+
+        builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.show();
+    }
+
+    private void confirmaSalvar() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //adiciona um título e uma mensagem
+        builder.setTitle(R.string.title_confimar);
+        builder.setMessage(R.string.message_confirma_salvar);
+        //adiciona os botões
+        builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
+    }
+
+    public void atualizaView() {
+
         lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
-        for (ItemPedido itemPedido : AppSetup.carrinho){
+        total = 0;
+        for (ItemPedido itemPedido : AppSetup.carrinho) {
             total = total + itemPedido.getTotalItem();
         }
     }
 }
-//separar em atualiza view
-//zera a variavel
-//e o for
