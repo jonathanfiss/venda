@@ -30,7 +30,7 @@ import br.edu.ifsul.vendas.setup.AppSetup;
 public class ProdutoDetalheActivity extends AppCompatActivity {
 
     private static final String TAG = "produtoDetalheActivity";
-    private TextView tvNome, tvDescricao, tvValor, tvEstoque;
+    private TextView tvNome, tvDescricao, tvValor, tvEstoque, tvVendedor;
     private EditText etQuantidade;
     private ImageView imvFoto;
     private Button btVender;
@@ -50,6 +50,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         etQuantidade = findViewById(R.id.etQuantidade);
         imvFoto = findViewById(R.id.imvFoto);
         btVender = findViewById(R.id.btComprarProduto);
+        tvVendedor = findViewById(R.id.tvVendedor);
 
         //obtém a position anexada como metadado
         Integer position = getIntent().getExtras().getInt("position");
@@ -60,6 +61,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         tvNome.setText(AppSetup.produtos.get(position).getNome());
         tvDescricao.setText(AppSetup.produtos.get(position).getDescricao());
         tvValor.setText(NumberFormat.getCurrencyInstance().format(AppSetup.produtos.get(position).getValor()));
+        tvVendedor.setText(AppSetup.usuario.getEmail());
         if(produto.getUrl_foto() != ""){
             //carrega a imagem aqui
         }

@@ -16,6 +16,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import br.edu.ifsul.vendas.R;
+import br.edu.ifsul.vendas.model.Usuario;
+import br.edu.ifsul.vendas.setup.AppSetup;
+
+import static br.edu.ifsul.vendas.setup.AppSetup.usuario;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -85,16 +89,19 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signin(String email, String password){
+    private void signin(final String email, String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+                            Usuario usuario = new Usuario();
+                            usuario.setEmail(email);
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             user = mAuth.getCurrentUser();
                             Log.d(TAG, user.getUid());
+                            AppSetup.usuario= usuario;
                             startActivity(new Intent(LoginActivity.this, ProdutosActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.

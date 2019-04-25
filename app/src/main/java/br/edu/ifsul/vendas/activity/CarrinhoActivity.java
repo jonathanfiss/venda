@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.CarrinhoAdapter;
@@ -29,6 +32,19 @@ public class CarrinhoActivity extends AppCompatActivity {
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
 
         lv_carrinho = findViewById(R.id.lv_carrinho);
+        lv_carrinho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                editaItem(position);
+            }
+        });
+        lv_carrinho.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                removeItem(position);
+                return false;
+            }
+        });
         atualizaView();
         tvTotalPedidoCarrinho.setText(String.valueOf(total));
         Log.d("retorno", AppSetup.carrinho.toString());
@@ -55,6 +71,14 @@ public class CarrinhoActivity extends AppCompatActivity {
         return true;
     }
 
+    private void editaItem(int position) {
+
+    }
+
+    private void removeItem(int position) {
+
+    }
+
     private void confirmaCancelar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -64,6 +88,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                AppSetup.carrinho = null;
                 finish();
             }
         });
@@ -99,7 +124,6 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     public void atualizaView() {
-
         lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
         total = 0;
         for (ItemPedido itemPedido : AppSetup.carrinho) {

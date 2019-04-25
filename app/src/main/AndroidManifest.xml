@@ -16,15 +16,15 @@
 
         </activity>
         <activity android:name=".activity.ProdutosActivity" android:label="Lista de Produtos">
+
+        </activity>
+        <activity android:name=".activity.LoginActivity" android:label="Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".activity.LoginActivity" android:label="Login">
-
         </activity>
         <activity android:name=".barcode.BarcodeCaptureActivity" android:label="Leitor de código" ></activity>
     </application>
