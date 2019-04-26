@@ -36,6 +36,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 editaItem(position);
+
             }
         });
         lv_carrinho.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -76,7 +77,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     private void removeItem(int position) {
-
+//    tenho que fazer o inverso do myRef.setValue(produto.getQuantidade()-quantidade);//feita a alteração do dado no firebase
     }
 
     private void confirmaCancelar() {

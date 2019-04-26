@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 ProgressBar pbLogin = findViewById(R.id.pb_login);
                 if (!email.isEmpty() && !senha.isEmpty()) {
                     pbLogin.setVisibility(View.VISIBLE);
-                    signin(email, senha);
+                    signin(email, senha, pbLogin);
                 } else {
                     Snackbar.make(findViewById(R.id.container_activity_login), "Preencha todos os campos.", Snackbar.LENGTH_LONG).show();
                     //Toast.makeText(LoginActivity.this, "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                 ProgressBar pbLogin = findViewById(R.id.pb_login);
                 if (!email.isEmpty() && !senha.isEmpty()) {
                     pbLogin.setVisibility(View.VISIBLE);
-                    signup(email, senha);
+                    signup(email, senha, pbLogin);
                 } else {
                     pbLogin.setVisibility(View.INVISIBLE);
                     Snackbar.make(findViewById(R.id.container_activity_login), "Preencha todos os campos.", Snackbar.LENGTH_LONG).show();
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         pbLogin.setVisibility(View.INVISIBLE);
     }
 
-    private void signup(String email, String senha) {
+    private void signup(String email, String senha, final ProgressBar pbLogin) {
         mAuth.createUserWithEmailAndPassword(email, senha)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -87,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                             user = mAuth.getCurrentUser();
                             startActivity(new Intent(LoginActivity.this, ProdutosActivity.class));
                         } else {
+                            pbLogin.setVisibility(View.INVISIBLE);
                             // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             if (task.getException().getMessage().contains("email")) {
@@ -103,7 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signin(final String email, String password) {
+    private void signin(final String email, String password, final ProgressBar pbLogin) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -118,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                             AppSetup.usuario = usuario;
                             startActivity(new Intent(LoginActivity.this, ProdutosActivity.class));
                         } else {
+                            pbLogin.setVisibility(View.INVISIBLE);
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure ", task.getException());
                             if (task.getException().getMessage().contains("password")) {

@@ -69,7 +69,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
 
         // obtém a referência do database e do nó
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("produtos/" + produto.getKey() + "/quantidade");
+        final DatabaseReference myRef = database.getReference("produtos/" + produto.getKey() + "/quantidade");
         // Escuta o database
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -102,6 +102,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
                             item.setTotalItem(quantidade * produto.getValor());
                             item.setSituacao(true);
                             AppSetup.carrinho.add(item);
+                            myRef.setValue(produto.getQuantidade()-quantidade);//feita a alteração do dado no firebase
                             Toast.makeText(ProdutoDetalheActivity.this, getString(R.string.toast_adicionado_ao_carrinho), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(ProdutoDetalheActivity.this, CarrinhoActivity.class));
                             finish();
