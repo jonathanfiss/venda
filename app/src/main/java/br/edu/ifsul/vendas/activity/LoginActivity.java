@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,11 +39,13 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.bt_sigin).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ((EditText)findViewById(R.id.etEmail)).getText().toString();
-                String senha = ((EditText)findViewById(R.id.etSenha)).getText().toString();
-                if(!email.isEmpty() && !senha.isEmpty()) {
-                    signin(email,senha);
-                }else{
+                String email = ((EditText) findViewById(R.id.etEmail)).getText().toString();
+                String senha = ((EditText) findViewById(R.id.etSenha)).getText().toString();
+                ProgressBar pbLogin = findViewById(R.id.pb_login);
+                if (!email.isEmpty() && !senha.isEmpty()) {
+                    pbLogin.setVisibility(View.VISIBLE);
+                    signin(email, senha);
+                } else {
                     Snackbar.make(findViewById(R.id.container_activity_login), "Preencha todos os campos.", Snackbar.LENGTH_LONG).show();
                     //Toast.makeText(LoginActivity.this, "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
                 }
@@ -51,15 +54,26 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.bt_sigup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = ((EditText)findViewById(R.id.etEmail)).getText().toString();
-                String senha = ((EditText)findViewById(R.id.etSenha)).getText().toString();
-                if(!email.isEmpty() && !senha.isEmpty()) {
-                    signup(email,senha);
-                }else{
+                String email = ((EditText) findViewById(R.id.etEmail)).getText().toString();
+                String senha = ((EditText) findViewById(R.id.etSenha)).getText().toString();
+                ProgressBar pbLogin = findViewById(R.id.pb_login);
+                if (!email.isEmpty() && !senha.isEmpty()) {
+                    pbLogin.setVisibility(View.VISIBLE);
+                    signup(email, senha);
+                } else {
+                    pbLogin.setVisibility(View.INVISIBLE);
                     Snackbar.make(findViewById(R.id.container_activity_login), "Preencha todos os campos.", Snackbar.LENGTH_LONG).show();
                     //Toast.makeText(LoginActivity.this, "Preencha todos os campos.", Toast.LENGTH_SHORT).show();
-                }            }
+                }
+            }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        ProgressBar pbLogin = findViewById(R.id.pb_login);
+        pbLogin.setVisibility(View.INVISIBLE);
     }
 
     private void signup(String email, String senha) {
@@ -75,9 +89,9 @@ public class LoginActivity extends AppCompatActivity {
                         } else {
                             // If sign up fails, display a message to the user.
                             Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            if(task.getException().getMessage().contains("email")){
+                            if (task.getException().getMessage().contains("email")) {
                                 Snackbar.make(findViewById(R.id.container_activity_login), R.string.email_already, Snackbar.LENGTH_LONG).show();
-                            }else {
+                            } else {
                                 Snackbar.make(findViewById(R.id.container_activity_login), R.string.signup_fail, Snackbar.LENGTH_LONG).show();
                             }
                             //Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
@@ -89,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    private void signin(final String email, String password){
+    private void signin(final String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -101,15 +115,15 @@ public class LoginActivity extends AppCompatActivity {
                             Log.d(TAG, "signInWithEmail:success");
                             user = mAuth.getCurrentUser();
                             Log.d(TAG, user.getUid());
-                            AppSetup.usuario= usuario;
+                            AppSetup.usuario = usuario;
                             startActivity(new Intent(LoginActivity.this, ProdutosActivity.class));
                         } else {
                             // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure ",  task.getException());
-                            if(task.getException().getMessage().contains("password")){
+                            Log.w(TAG, "signInWithEmail:failure ", task.getException());
+                            if (task.getException().getMessage().contains("password")) {
                                 Snackbar.make(findViewById(R.id.container_activity_login), R.string.password_fail, Snackbar.LENGTH_LONG).show();
                                 //Toast.makeText(LoginActivity.this, "Senha não cadastrada.", Toast.LENGTH_SHORT).show();
-                            }else{
+                            } else {
                                 Snackbar.make(findViewById(R.id.container_activity_login), R.string.email_fail, Snackbar.LENGTH_LONG).show();
                                 //Toast.makeText(LoginActivity.this, "Email não cadastrado.", Toast.LENGTH_SHORT).show();
                             }
