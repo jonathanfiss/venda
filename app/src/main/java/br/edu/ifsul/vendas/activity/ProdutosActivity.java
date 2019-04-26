@@ -95,7 +95,7 @@ public class ProdutosActivity extends AppCompatActivity {
             public boolean onQueryTextChange(String newText) {
                 List<Produto> produtosTemp = new ArrayList<>();
                 for (Produto produto : AppSetup.produtos) {
-                    if (produto.getNome().contains(newText)) {
+                    if (produto.getNome().toLowerCase().contains(newText.toLowerCase())) {
                         produtosTemp.add(produto);
                     }
                 }
