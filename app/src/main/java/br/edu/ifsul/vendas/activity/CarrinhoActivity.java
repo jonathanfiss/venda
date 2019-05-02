@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicMarkableReference;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.CarrinhoAdapter;
@@ -42,7 +43,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_carrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
 
-        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("produtos");
 
         // Read from the database
@@ -78,28 +79,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         lv_carrinho.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                // Write a message to the database
-
-                Log.d("tudo antes", AppSetup.carrinho.toString());
-                for (ItemPedido item : AppSetup.carrinho){
-                    if (item.equals(AppSetup.carrinho.get(position))){
-
-                        DatabaseReference myRef = database.getReference("produtos/" + AppSetup.carrinho.get(position).getProduto().getKey() + "/quantidade");
-                        myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
-                        if(AppSetup.carrinho.remove(item)){
-                            Log.d("item","item removido");
-                            atualizaView();
-                            Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
-                        }
-                        Log.d("item", item.toString());
-
-                    }
-                }
-                if (AppSetup.carrinho.isEmpty()){
-                    finish();
-                }
-                Log.d("tudo depois", AppSetup.carrinho.toString());
-
+                excluiItem(position);
                 return false;
             }
         });
@@ -130,6 +110,26 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     }
 
+    private void excluiItem(int position) {
+        Log.d("tudo antes", AppSetup.carrinho.toString());
+        for (ItemPedido item : AppSetup.carrinho) {
+            if (item.equals(AppSetup.carrinho.get(position))) {
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference myRef = database.getReference("produtos/" + AppSetup.carrinho.get(position).getProduto().getKey() + "/quantidade");
+                myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
+                if (AppSetup.carrinho.remove(item)) {
+                    Log.d("item", "item removido");
+                    atualizaView();
+                    Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
+                }
+                Log.d("item", item.toString());
+
+            }
+        }
+        Log.d("tudo depois", AppSetup.carrinho.toString());
+    }
+
     private void confirmaCancelar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -140,6 +140,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 AppSetup.carrinho.clear();
+                AppSetup.cliente = null;
                 finish();
             }
         });
@@ -184,3 +185,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         tvTotalPedidoCarrinho.setText(String.valueOf(total));
     }
 }
+// criar get e set index
+// armazenar o tamanho do size
+// para depois mandar a intent putextra(index)
+//
