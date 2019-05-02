@@ -13,9 +13,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.CarrinhoAdapter;
+import br.edu.ifsul.vendas.adapter.ProdutosAdapter;
 import br.edu.ifsul.vendas.model.ItemPedido;
+import br.edu.ifsul.vendas.model.Produto;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
 
@@ -23,15 +33,21 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     private ListView lv_carrinho;
     private double total;
+    private static final String TAG = "carrinhactivity";
+    private Produto produto;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_carrinho);
         TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
 
         lv_carrinho = findViewById(R.id.lv_carrinho);
+        atualizaView();
         lv_carrinho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -42,14 +58,37 @@ public class CarrinhoActivity extends AppCompatActivity {
         lv_carrinho.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                removeItem(position);
+                // Write a message to the database
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference myRef = database.getReference("produtos/" + AppSetup.produtos.get(position).getKey() + "/quantidade");
+
+
+                myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
+                for (ItemPedido item : AppSetup.carrinho) {
+                    if (item.getProduto().equals(AppSetup.carrinho.get(position).getProduto())){
+                        Log.d("forfor1", item.getProduto().toString());
+                    }else{
+                        AppSetup.produtos.add(item.getProduto());
+
+                    }
+
+
+//                    ItemPedido item = new ItemPedido();
+//                    item.setProduto(produto);
+//                    item.setQuantidade(quantidade);
+//                    item.setTotalItem(quantidade * produto.getValor());
+//                    item.setSituacao(true);
+//                    AppSetup.carrinho.add(item);
+
+                }
+                Log.d("abc",AppSetup.produtos.toString());
+//                AppSetup.carrinho.get(position).remove(AppSetup.carrinho.get(position).getProduto());
+                atualizaView();
+                Log.d("forfor2",AppSetup.carrinho.get(position).toString());
                 return false;
             }
         });
-        atualizaView();
         tvTotalPedidoCarrinho.setText(String.valueOf(total));
-        Log.d("retorno", AppSetup.carrinho.toString());
-
         tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" " + AppSetup.cliente.getSobrenome())));
     }
 
@@ -76,10 +115,6 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     }
 
-    private void removeItem(int position) {
-//    tenho que fazer o inverso do myRef.setValue(produto.getQuantidade()-quantidade);//feita a alteração do dado no firebase
-    }
-
     private void confirmaCancelar() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
@@ -89,7 +124,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                AppSetup.carrinho = null;
+                AppSetup.carrinho.clear();
                 finish();
             }
         });

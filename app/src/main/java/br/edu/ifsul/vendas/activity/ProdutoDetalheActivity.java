@@ -55,14 +55,14 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         //obtém a position anexada como metadado
         Integer position = getIntent().getExtras().getInt("position");
         produto = AppSetup.produtos.get(position);
-        Log.d(TAG, ""+ produto.equals(AppSetup.produtos.get(position)));
+        Log.d(TAG, "é igual" + produto.equals(AppSetup.produtos.get(position)));
 
         //bindview
         tvNome.setText(AppSetup.produtos.get(position).getNome());
         tvDescricao.setText(AppSetup.produtos.get(position).getDescricao());
         tvValor.setText(NumberFormat.getCurrencyInstance().format(AppSetup.produtos.get(position).getValor()));
         tvVendedor.setText(AppSetup.usuario.getEmail());
-        if(produto.getUrl_foto() != ""){
+        if (produto.getUrl_foto() != "") {
             //carrega a imagem aqui
         }
 
@@ -87,14 +87,14 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         btVender.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(AppSetup.cliente == null){
+                if (AppSetup.cliente == null) {
                     startActivity(new Intent(ProdutoDetalheActivity.this, ClientesActivity.class));
-                }else{
-                    if(etQuantidade.getText().toString().isEmpty()){
+                } else {
+                    if (etQuantidade.getText().toString().isEmpty()) {
                         Toast.makeText(ProdutoDetalheActivity.this, "Digite a quantidade.", Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         Integer quantidade = Integer.valueOf(etQuantidade.getText().toString());
-                        if(quantidade <= produto.getQuantidade()){
+                        if (quantidade <= produto.getQuantidade()) {
                             //vende
                             ItemPedido item = new ItemPedido();
                             item.setProduto(produto);
@@ -102,11 +102,11 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
                             item.setTotalItem(quantidade * produto.getValor());
                             item.setSituacao(true);
                             AppSetup.carrinho.add(item);
-                            myRef.setValue(produto.getQuantidade()-quantidade);//feita a alteração do dado no firebase
+                            myRef.setValue(produto.getQuantidade() - quantidade);//feita a alteração do dado no firebase
                             Toast.makeText(ProdutoDetalheActivity.this, getString(R.string.toast_adicionado_ao_carrinho), Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(ProdutoDetalheActivity.this, CarrinhoActivity.class));
                             finish();
-                        }else{
+                        } else {
                             Toast.makeText(ProdutoDetalheActivity.this, "Quantidade acima do estoque.", Toast.LENGTH_SHORT).show();
                         }
                     }

@@ -17,7 +17,6 @@ import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.model.Cliente;
 
 
-
 public class ClientesAdapter extends ArrayAdapter<Cliente> {
 
     private Context context;
@@ -35,7 +34,7 @@ public class ClientesAdapter extends ArrayAdapter<Cliente> {
         Cliente cliente = getItem(position);
 
         //infla a view
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_cliente_adapter, parent, false);
         }
 
@@ -45,12 +44,12 @@ public class ClientesAdapter extends ArrayAdapter<Cliente> {
         ImageView imvFoto = convertView.findViewById(R.id.imvFotoClienteAdapter);
 
         //vincula os dados do objeto de modelo à view
-        tvNome.setText(cliente.getNome().concat(" "+cliente.getSobrenome()));
+        tvNome.setText(cliente.getNome().concat(" " + cliente.getSobrenome()));
 //        tvNome.setText(cliente.getNome());
         tvCPF.setText(cliente.getCpf());
-        if(cliente.getUrl_foto() != null){
+        if (cliente.getUrl_foto() != null) {
             //aqui vai vincular a foto do cliente vindo do firebase usando a biblioteca Picasso
-        }else{
+        } else {
             imvFoto.setImageResource(R.drawable.img_cliente_icon_524x524);
         }
 

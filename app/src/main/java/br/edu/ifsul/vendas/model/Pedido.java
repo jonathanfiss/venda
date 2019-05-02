@@ -14,7 +14,8 @@ public class Pedido {
     private List<ItemPedido> itens; //associação entre as classes Pedido-ItemPedido
     private Cliente cliente; //associação entre as classes Pedido-Cliente
 
-    public Pedido(){}
+    public Pedido() {
+    }
 
     public Long getKey() {
         return key;

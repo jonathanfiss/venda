@@ -84,6 +84,7 @@ public class ClientesActivity extends AppCompatActivity {
             }
         });
     }
+
     private void selecionarCliente(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //adiciona um título e uma mensagem
@@ -110,7 +111,7 @@ public class ClientesActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_clientes, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.menuitem_pesquisar).getActionView();
         searchView.setQueryHint(getString(R.string.hint_nome_searchview));
@@ -137,8 +138,8 @@ public class ClientesActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.menuitem_barcode:
                 Intent intent = new Intent(ClientesActivity.this, BarcodeCaptureActivity.class);
                 intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
@@ -148,6 +149,7 @@ public class ClientesActivity extends AppCompatActivity {
         }
         return true;
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RC_BARCODE_CAPTURE) {

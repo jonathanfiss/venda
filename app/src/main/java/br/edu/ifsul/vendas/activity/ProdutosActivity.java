@@ -42,7 +42,7 @@ public class ProdutosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_produtos);
 
         lvProdutos = findViewById(R.id.lv_produtos);
-        lvProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        lvProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(ProdutosActivity.this, ProdutoDetalheActivity.class);
@@ -63,7 +63,7 @@ public class ProdutosActivity extends AppCompatActivity {
                 Log.d(TAG, "Value is: " + dataSnapshot.getValue());
 
                 AppSetup.produtos = new ArrayList<>();
-                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Produto produto = ds.getValue(Produto.class);
                     produto.setKey(ds.getKey());
                     AppSetup.produtos.add(produto);
@@ -81,7 +81,8 @@ public class ProdutosActivity extends AppCompatActivity {
             }
         });
     }
-    public boolean onCreateOptionsMenu(Menu menu){
+
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_produtos, menu);
         SearchView searchView = (SearchView) menu.findItem(R.id.menuitem_pesquisar).getActionView();
         searchView.setQueryHint(getString(R.string.hint_nome_searchview));
@@ -103,12 +104,12 @@ public class ProdutosActivity extends AppCompatActivity {
                 return true;
             }
         });
-    return true;
+        return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item){
-        switch (item.getItemId()){
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.menuitem_barcode:
                 Intent intent = new Intent(ProdutosActivity.this, BarcodeCaptureActivity.class);
                 intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);

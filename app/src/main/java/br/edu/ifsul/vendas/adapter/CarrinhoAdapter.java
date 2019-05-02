@@ -31,12 +31,12 @@ public class CarrinhoAdapter extends ArrayAdapter<ItemPedido> {
 
         final ViewHolder holder;
 
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_carrinho_adapter, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
-        }else{
-                holder = (ViewHolder) convertView.getTag();
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
         //bindview
@@ -44,27 +44,27 @@ public class CarrinhoAdapter extends ArrayAdapter<ItemPedido> {
         holder.nomeProduto.setText(item.getProduto().getNome());
         holder.quantidade.setText(item.getQuantidade().toString());
         holder.totalDoItem.setText(NumberFormat.getCurrencyInstance().format(item.getTotalItem()));
-        if(item.getProduto().getUrl_foto().equals("")){
+        if (item.getProduto().getUrl_foto().equals("")) {
             holder.pbFoto.setVisibility(View.INVISIBLE);
             holder.fotoProduto.setImageResource(R.drawable.img_carrinho_de_compras);
-        }else{
+        } else {
             //carrega a imagem do serviço Storage aqui
         }
         return convertView;
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         TextView nomeProduto;
         TextView quantidade;
         TextView totalDoItem;
         ImageView fotoProduto;
         ProgressBar pbFoto;
 
-        public ViewHolder(View convertView){
+        public ViewHolder(View convertView) {
             //mapeia os componentes da UI para vincular os dados do objeto de modelo
             nomeProduto = convertView.findViewById(R.id.tvNomeProdutoCarrinhoAdapter);
             quantidade = convertView.findViewById(R.id.tvQuantidadeDeProdutoCarrinhoAdapater);
-            totalDoItem =  convertView.findViewById(R.id.tvTotalItemCarrinhoAdapter);
+            totalDoItem = convertView.findViewById(R.id.tvTotalItemCarrinhoAdapter);
             fotoProduto = convertView.findViewById(R.id.imvFotoProdutoCarrinhoAdapter);
             pbFoto = convertView.findViewById(R.id.pb_foto_carrinho);
         }

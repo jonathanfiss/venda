@@ -34,7 +34,7 @@ public class ProdutosAdapter extends ArrayAdapter<Produto> {
         Produto produto = getItem(position);
 
         //infla a view
-        if(convertView == null){
+        if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_produto_adapter, parent, false);
         }
 
@@ -48,9 +48,9 @@ public class ProdutosAdapter extends ArrayAdapter<Produto> {
         tvNome.setText(produto.getNome());
         tvEstoque.setText(produto.getQuantidade().toString());
         tvValor.setText(NumberFormat.getCurrencyInstance().format(produto.getValor()));
-        if(produto.getUrl_foto() != null){
+        if (produto.getUrl_foto() != null) {
             //aqui vai vincular a foto do produto vindo do firebase usando a biblioteca Picasso
-        }else{
+        } else {
             imvFoto.setImageResource(R.drawable.img_carrinho_de_compras);
         }
 

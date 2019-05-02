@@ -3,7 +3,7 @@ package br.edu.ifsul.vendas.model;
 import java.io.Serializable;
 import java.util.List;
 
-public class Produto implements Serializable{
+public class Produto implements Serializable {
     private Long codigoDeBarras;
     private String nome;
     private String descricao;
