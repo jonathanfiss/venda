@@ -34,17 +34,37 @@ public class CarrinhoActivity extends AppCompatActivity {
     private ListView lv_carrinho;
     private double total;
     private static final String TAG = "carrinhactivity";
-    private Produto produto;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         setContentView(R.layout.activity_carrinho);
-        TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("produtos");
+
+        // Read from the database
+        myRef.orderByChild("nome").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                AppSetup.produtos = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    Produto produto = ds.getValue(Produto.class);
+                    produto.setKey(ds.getKey());
+                    AppSetup.produtos.add(produto);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+        });
 
         lv_carrinho = findViewById(R.id.lv_carrinho);
         atualizaView();
@@ -59,36 +79,31 @@ public class CarrinhoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 // Write a message to the database
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                final DatabaseReference myRef = database.getReference("produtos/" + AppSetup.produtos.get(position).getKey() + "/quantidade");
 
+                Log.d("tudo antes", AppSetup.carrinho.toString());
+                for (ItemPedido item : AppSetup.carrinho){
+                    if (item.equals(AppSetup.carrinho.get(position))){
 
-                myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
-                for (ItemPedido item : AppSetup.carrinho) {
-                    if (item.getProduto().equals(AppSetup.carrinho.get(position).getProduto())){
-                        Log.d("forfor1", item.getProduto().toString());
-                    }else{
-                        AppSetup.produtos.add(item.getProduto());
+                        DatabaseReference myRef = database.getReference("produtos/" + AppSetup.carrinho.get(position).getProduto().getKey() + "/quantidade");
+                        myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
+                        if(AppSetup.carrinho.remove(item)){
+                            Log.d("item","item removido");
+                            atualizaView();
+                            Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
+                        }
+                        Log.d("item", item.toString());
 
                     }
-
-
-//                    ItemPedido item = new ItemPedido();
-//                    item.setProduto(produto);
-//                    item.setQuantidade(quantidade);
-//                    item.setTotalItem(quantidade * produto.getValor());
-//                    item.setSituacao(true);
-//                    AppSetup.carrinho.add(item);
-
                 }
-                Log.d("abc",AppSetup.produtos.toString());
-//                AppSetup.carrinho.get(position).remove(AppSetup.carrinho.get(position).getProduto());
-                atualizaView();
-                Log.d("forfor2",AppSetup.carrinho.get(position).toString());
+                if (AppSetup.carrinho.isEmpty()){
+                    finish();
+                }
+                Log.d("tudo depois", AppSetup.carrinho.toString());
+
                 return false;
             }
         });
-        tvTotalPedidoCarrinho.setText(String.valueOf(total));
+
         tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" " + AppSetup.cliente.getSobrenome())));
     }
 
@@ -160,10 +175,12 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     public void atualizaView() {
+        TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
         total = 0;
         for (ItemPedido itemPedido : AppSetup.carrinho) {
             total = total + itemPedido.getTotalItem();
         }
+        tvTotalPedidoCarrinho.setText(String.valueOf(total));
     }
 }

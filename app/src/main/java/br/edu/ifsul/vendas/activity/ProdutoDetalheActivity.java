@@ -55,7 +55,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         //obtém a position anexada como metadado
         Integer position = getIntent().getExtras().getInt("position");
         produto = AppSetup.produtos.get(position);
-        Log.d(TAG, "é igual" + produto.equals(AppSetup.produtos.get(position)));
+//        Log.d(TAG, "é igual" + produto.equals(AppSetup.produtos.get(position)));
 
         //bindview
         tvNome.setText(AppSetup.produtos.get(position).getNome());

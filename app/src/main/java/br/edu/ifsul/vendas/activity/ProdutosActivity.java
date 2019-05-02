@@ -60,7 +60,7 @@ public class ProdutosActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
+//                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
 
                 AppSetup.produtos = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {

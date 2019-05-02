@@ -63,7 +63,7 @@ public class ClientesActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
+//                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
 
                 clientes = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
