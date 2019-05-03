@@ -107,27 +107,47 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     private void editaItem(int position) {
-
-    }
-
-    private void excluiItem(int position) {
-        Log.d("tudo antes", AppSetup.carrinho.toString());
-        for (ItemPedido item : AppSetup.carrinho) {
-            if (item.equals(AppSetup.carrinho.get(position))) {
-
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("produtos/" + AppSetup.carrinho.get(position).getProduto().getKey() + "/quantidade");
-                myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
-                if (AppSetup.carrinho.remove(item)) {
-                    Log.d("item", "item removido");
-                    atualizaView();
-                    Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
-                }
-                Log.d("item", item.toString());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //adiciona um título e uma mensagem
+        builder.setTitle(R.string.title_confimar);
+        builder.setMessage("Você tem certeza que deseja editar esse item?");
+        //adiciona os botões
+        builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
 
             }
-        }
-        Log.d("tudo depois", AppSetup.carrinho.toString());
+        });
+        builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
+    }
+
+    private void excluiItem(final int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //adiciona um título e uma mensagem
+        builder.setTitle(R.string.title_confimar);
+        builder.setMessage("Você tem certeza que deseja excluir esse item?");
+        //adiciona os botões
+        builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                removeItem(position);
+            }
+        });
+        builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        builder.show();
     }
 
     private void confirmaCancelar() {
@@ -173,6 +193,17 @@ public class CarrinhoActivity extends AppCompatActivity {
         });
 
         builder.show();
+    }
+
+    public void removeItem(int position) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("produtos/" + AppSetup.carrinho.get(position).getProduto().getKey() + "/quantidade");
+        myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
+        AppSetup.carrinho.remove(position);
+        Log.d("item", "item removido");
+        atualizaView();
+        Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
+
     }
 
     public void atualizaView() {
