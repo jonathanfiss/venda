@@ -251,4 +251,9 @@ public class CarrinhoActivity extends AppCompatActivity {
 //itens salva itens
 //key
 //situaçao true
-//totalpedido
+////totalpedido
+// cria pedido
+//   seta o pedido no no salva
+//    metodo recebe pedido
+//string key = myref.push().getkey();
+//my.child(key)
