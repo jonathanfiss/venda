@@ -66,7 +66,6 @@ public class ProdutosActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Produto produto = ds.getValue(Produto.class);
                     produto.setKey(ds.getKey());
-//                    produto.setIndex();
                     AppSetup.produtos.add(produto);
                 }
 

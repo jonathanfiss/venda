@@ -12,7 +12,7 @@ public class Produto implements Serializable {
     private boolean situacao;
     private String url_foto;
     private String key; //atributo apenas local
-    private Integer index;
+
 
     public Produto() {
     }
@@ -81,9 +81,6 @@ public class Produto implements Serializable {
         this.key = key;
     }
 
-    public Integer getIndex() {return index; }
-
-    public void setIndex(Integer index) {this.index = index; }
 
     @Override
     public String toString() {

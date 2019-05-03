@@ -182,7 +182,13 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                if (AppSetup.carrinho== null){
+                    Toast.makeText(CarrinhoActivity.this, "Você não possui nenhum produto, que possa ser salvo", Toast.LENGTH_SHORT).show();
+                }else{
+                    FirebaseDatabase database = FirebaseDatabase.getInstance();
+                    final DatabaseReference myRef = database.getReference("pedidos");
+                    myRef.setValue(AppSetup.carrinho);//feita a alteração do dado no firebase
+                }
             }
         });
         builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
