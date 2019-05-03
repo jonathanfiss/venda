@@ -1,6 +1,7 @@
 package br.edu.ifsul.vendas.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -115,7 +116,9 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                Intent intent = new Intent(CarrinhoActivity.this, ProdutosActivity.class);
+//                intent.putExtra();passar o valor para o produtosactivity
+                startActivity(intent);
             }
         });
         builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
@@ -226,3 +229,26 @@ public class CarrinhoActivity extends AppCompatActivity {
 // armazenar o tamanho do size
 // para depois mandar a intent putextra(index)
 //
+//atualizaEstoque
+//final databasereference myref =data
+//altera banco myref(item.getproduto().getkey().child("atualiza o campo filho").setvalue(valor);
+//remove item
+//e chama atualiza view
+
+//produto.setindex(Appsetup.produtos.size());
+
+//cancela pedido
+//for nos itens appsetup.carrinho
+//set no banco de dados cada item
+//para voltar o estado com valores sem modificação
+//
+//salvar no banco
+//salva cliente
+//datacriaçã
+//datamodificação
+//estado"aberto/fechado"
+//formade pagamento avista/prazo
+//itens salva itens
+//key
+//situaçao true
+//totalpedido
