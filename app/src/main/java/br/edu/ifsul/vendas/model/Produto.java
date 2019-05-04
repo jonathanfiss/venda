@@ -1,5 +1,7 @@
 package br.edu.ifsul.vendas.model;
 
+import com.google.firebase.database.Exclude;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Produto implements Serializable {
     private boolean situacao;
     private String url_foto;
     private String key; //atributo apenas local
+    private Integer index;
 
 
     public Produto() {
@@ -80,7 +83,14 @@ public class Produto implements Serializable {
     public void setKey(String key) {
         this.key = key;
     }
-
+    @Exclude
+    public Integer getIndex() {
+        return index;
+    }
+    @Exclude
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 
     @Override
     public String toString() {

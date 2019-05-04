@@ -14,20 +14,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicMarkableReference;
+import java.text.NumberFormat;
+import java.util.Date;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.CarrinhoAdapter;
-import br.edu.ifsul.vendas.adapter.ProdutosAdapter;
 import br.edu.ifsul.vendas.model.ItemPedido;
-import br.edu.ifsul.vendas.model.Produto;
+import br.edu.ifsul.vendas.model.Pedido;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
 
@@ -35,7 +31,8 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     private ListView lv_carrinho;
     private double total;
-    private static final String TAG = "carrinhactivity";
+    //    private static final String TAG = "carrinhactivity";
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,40 +40,10 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_carrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("produtos");
-
-        // Read from the database
-        myRef.orderByChild("nome").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                AppSetup.produtos = new ArrayList<>();
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Produto produto = ds.getValue(Produto.class);
-                    produto.setKey(ds.getKey());
-                    AppSetup.produtos.add(produto);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
+        tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" " + AppSetup.cliente.getSobrenome())));
         lv_carrinho = findViewById(R.id.lv_carrinho);
-        atualizaView();
-        lv_carrinho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                editaItem(position);
 
-            }
-        });
+        atualizaView();
         lv_carrinho.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -85,7 +52,13 @@ public class CarrinhoActivity extends AppCompatActivity {
             }
         });
 
-        tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" " + AppSetup.cliente.getSobrenome())));
+        lv_carrinho.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                editaItem(position);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -107,17 +80,18 @@ public class CarrinhoActivity extends AppCompatActivity {
         return true;
     }
 
-    private void editaItem(int position) {
+    private void editaItem(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //adiciona um título e uma mensagem
         builder.setTitle(R.string.title_confimar);
-        builder.setMessage("Você tem certeza que deseja editar esse item?");
+        builder.setMessage(R.string.mensagens_edita);
         //adiciona os botões
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(CarrinhoActivity.this, ProdutosActivity.class);
-//                intent.putExtra();passar o valor para o produtosactivity
+                atualizaEstoque(position);
+                Intent intent = new Intent(CarrinhoActivity.this, ProdutoDetalheActivity.class);
+                intent.putExtra("position", AppSetup.produtos.get(position).getIndex());
                 startActivity(intent);
             }
         });
@@ -135,12 +109,12 @@ public class CarrinhoActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //adiciona um título e uma mensagem
         builder.setTitle(R.string.title_confimar);
-        builder.setMessage("Você tem certeza que deseja excluir esse item?");
+        builder.setMessage(R.string.mensagem_exclui);
         //adiciona os botões
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                removeItem(position);
+                atualizaEstoque(position);
             }
         });
         builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
@@ -162,6 +136,13 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Log.d("tamanho", String.valueOf(AppSetup.carrinho.size()));
+                for (ItemPedido item : AppSetup.carrinho) {
+                    DatabaseReference myRef = database.getReference("produtos/" + item.getProduto().getKey() + "/quantidade");
+                    myRef.setValue(item.getQuantidade() + item.getProduto().getQuantidade());
+                    Log.d("removido", item.toString());
+                    Log.d("item", "item removido");
+                }
                 AppSetup.carrinho.clear();
                 AppSetup.cliente = null;
                 finish();
@@ -185,12 +166,31 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (AppSetup.carrinho== null){
-                    Toast.makeText(CarrinhoActivity.this, "Você não possui nenhum produto, que possa ser salvo", Toast.LENGTH_SHORT).show();
-                }else{
-                    FirebaseDatabase database = FirebaseDatabase.getInstance();
-                    final DatabaseReference myRef = database.getReference("pedidos");
-                    myRef.setValue(AppSetup.carrinho);//feita a alteração do dado no firebase
+                if (AppSetup.carrinho == null) {
+                    Toast.makeText(CarrinhoActivity.this, getString(R.string.carrinho_vazio), Toast.LENGTH_SHORT).show();
+                } else {
+                    Date dataHoraAtual = new Date();
+
+                    DatabaseReference myRef = database.getReference("pedidos");
+                    String key = myRef.push().getKey();
+
+                    Pedido pedido = new Pedido();
+                    pedido.setCliente(AppSetup.cliente);
+                    pedido.setDataCriacao(dataHoraAtual);
+                    pedido.setDataModificacao(dataHoraAtual);
+                    pedido.setEstado("aberto");
+                    pedido.setFormaDePagamento("avista");
+                    pedido.setItens(AppSetup.carrinho);
+//                    pedido.setKey(Long.valueOf(key));
+                    pedido.setSituacao(true);
+                    pedido.setTotalPedido(total);
+
+                    myRef.child(key).setValue(pedido);
+
+                    AppSetup.clientes = null;
+                    AppSetup.carrinho.clear();
+                    AppSetup.pedido = null;
+                    finish();
                 }
             }
         });
@@ -204,43 +204,30 @@ public class CarrinhoActivity extends AppCompatActivity {
         builder.show();
     }
 
-    public void removeItem(int position) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public void atualizaEstoque(int position) {
         DatabaseReference myRef = database.getReference("produtos/" + AppSetup.carrinho.get(position).getProduto().getKey() + "/quantidade");
-        myRef.setValue(AppSetup.produtos.get(position).getQuantidade() + AppSetup.carrinho.get(position).getQuantidade());
+        myRef.setValue(AppSetup.carrinho.get(position).getQuantidade() + AppSetup.carrinho.get(position).getProduto().getQuantidade());
+
+        Log.d("removido", AppSetup.carrinho.get(position).toString());
         AppSetup.carrinho.remove(position);
         Log.d("item", "item removido");
-        atualizaView();
-        Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
 
+        atualizaView();
+
+        Toast.makeText(CarrinhoActivity.this, "Produto removido com sucesso!", Toast.LENGTH_SHORT).show();
     }
 
     public void atualizaView() {
         TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
-        total = 0;
+        Double total = 0.0;
         for (ItemPedido itemPedido : AppSetup.carrinho) {
             total = total + itemPedido.getTotalItem();
         }
-        tvTotalPedidoCarrinho.setText(String.valueOf(total));
+        tvTotalPedidoCarrinho.setText(NumberFormat.getCurrencyInstance().format(total));
     }
 }
-// criar get e set index
-// armazenar o tamanho do size
-// para depois mandar a intent putextra(index)
-//
-//atualizaEstoque
-//final databasereference myref =data
-//altera banco myref(item.getproduto().getkey().child("atualiza o campo filho").setvalue(valor);
-//remove item
-//e chama atualiza view
 
-//produto.setindex(Appsetup.produtos.size());
-
-//cancela pedido
-//for nos itens appsetup.carrinho
-//set no banco de dados cada item
-//para voltar o estado com valores sem modificação
 //
 //salvar no banco
 //salva cliente
