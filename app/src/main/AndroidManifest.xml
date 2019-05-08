@@ -17,10 +17,11 @@
         <activity android:name=".activity.ProdutoDetalheActivity" />
         <activity
             android:name=".activity.ClientesActivity"
-            android:label="Lista de Clientes"></activity>
+            android:label="Lista de Clientes" />
         <activity
             android:name=".activity.ProdutosActivity"
-            android:label="Lista de Produtos"></activity>
+            android:label="Lista de Produtos"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activity.LoginActivity"
             android:label="Login">

@@ -60,4 +60,5 @@
     <string name="carrinho_vazio">Você não possui nenhum produto, que possa ser salvo</string>
     <string name="mensagens_edita">Você tem certeza que deseja editar esse item?</string>
     <string name="mensagem_exclui">Você tem certeza que deseja excluir esse item?</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
