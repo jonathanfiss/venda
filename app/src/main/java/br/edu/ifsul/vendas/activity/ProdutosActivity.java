@@ -217,7 +217,8 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
             }
             case R.id.nav_sair:{
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
+                finish();
+//                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
                 break;
             }
 

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Vendas</string>
-    <string name="hint_senha">senha</string>
+    <string name="hint_senha">Senha</string>
     <string name="hint_email">Email</string>
     <string name="contentDescription">Logo da empresa</string>
     <string name="bt_sigin">Sing In</string>
@@ -10,8 +10,8 @@
     <string name="email_already">Email já cadastrado.</string>
     <string name="signup_fail">Sign UP falhou. A internet está conectada?</string>
     <string name="hint_estoque">Estoque</string>
-    <string name="hint_nome">nome</string>
-    <string name="content_description_foto_produto">foto do produto</string>
+    <string name="hint_nome">Nome</string>
+    <string name="content_description_foto_produto">Foto do Produto</string>
     <string name="hint_valor">Valor</string>
     <string name="hint_cpf">CPF</string>
     <string name="menu_nav_carrinho">Carrinho</string>
@@ -21,12 +21,12 @@
     <string name="menu_nav_sobre">Sobre</string>
     <string name="menu_nav_sair">Sair</string>
     <string name="action_settings">configurações</string>
-    <string name="menu_vender">menu de vendas</string>
+    <string name="menu_vender">Menu de Vendas</string>
     <string name="menu_cancelar">Cancelar</string>
     <string name="menu_pesquisar">Pesquisar</string>
     <string name="title_menu_lercodigodebarras">Codigo de Barras</string>
     <string name="hint_nome_searchview">Procurar...</string>
-    <string name="foto_do_produto">foto produto</string>
+    <string name="foto_do_produto">Foto Produto</string>
     <string name="hint_valor_produto">Valor</string>
     <string name="hint_estoque_produto">Estoque</string>
     <string name="hint_nome_produto">Nome produto</string>
@@ -42,7 +42,7 @@
     <string name="ok">OK</string>
     <string name="no_camera_permission">Este aplicativo não pode ser executado porque não possui a permissão da câmera. O aplicativo será encerrado agora.</string>
     <string name="title_selecionar_cliente">Confirma este cliente</string>
-    <string name="message_nome_cliente">nome</string>
+    <string name="message_nome_cliente">Nome:</string>
     <string name="message_cpf_cliente">CPF:</string>
     <string name="alertdialog_sim">Sim</string>
     <string name="toast_cliente_selecionado">Cliente Selecionado</string>
