@@ -61,4 +61,22 @@
     <string name="mensagens_edita">Você tem certeza que deseja editar esse item?</string>
     <string name="mensagem_exclui">Você tem certeza que deseja excluir esse item?</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="titulo_janela_galeria_imagens">Selecione uma imagem</string>
+    <string name="snack_preencher_todos_campos">Todos os campos devem ser preenchidos.</string>
+    <string name="toast_foto_produto_upload_fail">A foto do produto não foi salva.</string>
+    <string name="toast_codigo_barras_ja_cadastrado">Código de barras já cadastrado.</string>
+    <string name="toast_produto_salvo">Produto salvo.</string>
+    <string name="snack_operacao_falhou">Operação falhou.</string>
+    <string name="toast_produto_nao_cadastrado">Produto não cadastrado.</string>
+    <string name="message_processando">Processando ...</string>
+    <string name="label_codigo_de_barras">Código De Barras</string>
+    <string name="hint_codigo_de_barras">Utilize o leitor ou digite</string>
+    <string name="label_nome">Nome:</string>
+    <string name="label_descricao">Descrição</string>
+    <string name="label_valor">Valor:</string>
+    <string name="hint_digite_valor">Digite o valor</string>
+    <string name="label_quantidade">Quantidade:</string>
+    <string name="hint_quantidade_digite">Digite a quantidade</string>
+    <string name="titulo_tela_produto_administracao">Produto (administração)</string>
+    <string name="bt_salvar">Salvar</string>
 </resources>

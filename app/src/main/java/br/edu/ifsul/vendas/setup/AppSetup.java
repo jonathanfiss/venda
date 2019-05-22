@@ -1,7 +1,14 @@
 package br.edu.ifsul.vendas.setup;
 
+import android.graphics.Bitmap;
+import android.hardware.camera2.CaptureRequest;
+
+import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import br.edu.ifsul.vendas.model.Cliente;
 import br.edu.ifsul.vendas.model.ItemPedido;
@@ -18,4 +25,6 @@ public class AppSetup {
     public static Cliente cliente = null;
     public static Pedido pedido = null;
 
+
+    public static Map<String, Bitmap> cacheProdutos = new HashMap<>();
 }

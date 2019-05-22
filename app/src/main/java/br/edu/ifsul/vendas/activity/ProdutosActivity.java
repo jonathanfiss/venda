@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
@@ -190,32 +191,34 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        TextView tvUsuarioEmail = findViewById(R.id.tvEmailUsuario);
+        tvUsuarioEmail.setText(AppSetup.usuario.getEmail());
         switch (menuItem.getItemId()) {
-            case R.id.nav_carrinho:{
-                if (AppSetup.carrinho.isEmpty()){
+            case R.id.nav_carrinho: {
+                if (AppSetup.carrinho.isEmpty()) {
                     Toast.makeText(this, "O carrinho esta vazio", Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     startActivity(new Intent(ProdutosActivity.this, CarrinhoActivity.class));
                 }
                 break;
             }
-            case R.id.nav_clientes:{
+            case R.id.nav_clientes: {
                 startActivity(new Intent(ProdutosActivity.this, ClientesActivity.class));
                 break;
             }
-            case R.id.nav_produto_adminstracao:{
-
+            case R.id.nav_produto_adminstracao: {
+                startActivity(new Intent(ProdutosActivity.this, ProdutoAdminActivity.class));
                 break;
             }
-            case R.id.nav_cliente_administracao:{
-
+            case R.id.nav_cliente_administracao: {
+                startActivity(new Intent(ProdutosActivity.this, ClienteAdminActivity.class));
                 break;
             }
-            case R.id.nav_sobre:{
-
+            case R.id.nav_sobre: {
+                startActivity(new Intent(ProdutosActivity.this, SobreActivity.class));
                 break;
             }
-            case R.id.nav_sair:{
+            case R.id.nav_sair: {
                 FirebaseAuth.getInstance().signOut();
                 finish();
 //                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
