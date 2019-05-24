@@ -61,7 +61,7 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
         tvNome.setText(AppSetup.produtos.get(position).getNome());
         tvDescricao.setText(AppSetup.produtos.get(position).getDescricao());
         tvValor.setText(NumberFormat.getCurrencyInstance().format(AppSetup.produtos.get(position).getValor()));
-        tvVendedor.setText(AppSetup.usuario.getEmail());
+        tvVendedor.setText(AppSetup.user.getEmail());
         if (produto.getUrl_foto() != "") {
             //carrega a imagem aqui
         }

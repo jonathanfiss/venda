@@ -192,7 +192,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         TextView tvUsuarioEmail = findViewById(R.id.tvEmailUsuario);
-        tvUsuarioEmail.setText(AppSetup.usuario.getEmail());
+        tvUsuarioEmail.setText(AppSetup.user.getEmail());
         switch (menuItem.getItemId()) {
             case R.id.nav_carrinho: {
                 if (AppSetup.carrinho.isEmpty()) {
