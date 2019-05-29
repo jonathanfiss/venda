@@ -67,7 +67,7 @@ public class ProdutosAdapter extends ArrayAdapter<Produto> {
         }else{
             //faz o download do servidor
             if(AppSetup.cacheProdutos.get(produto.getKey()) == null){
-                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("images/produtos/" + produto.getCodigoDeBarras() + ".jpeg");
+                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("produtos/" + produto.getCodigoDeBarras() + ".jpeg");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 mStorageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -80,7 +80,7 @@ public class ProdutosAdapter extends ArrayAdapter<Produto> {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Log.d(TAG, "Download da foto do produto falhou: " + "images/produtos/" + produto.getCodigoDeBarras() + ".jpeg");
+                        Log.d(TAG, "Download da foto do produto falhou: " + "produtos/" + produto.getCodigoDeBarras() + ".jpeg");
                     }
                 });
             }else{

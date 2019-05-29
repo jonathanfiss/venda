@@ -38,6 +38,8 @@ public class CarrinhoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_carrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
         tvClienteCarinho.setText(String.valueOf(AppSetup.cliente.getNome().concat(" " + AppSetup.cliente.getSobrenome())));
@@ -75,6 +77,9 @@ public class CarrinhoActivity extends AppCompatActivity {
                 break;
             case R.id.menuitem_cancelar:
                 confirmaCancelar();
+                break;
+            case R.id.home:
+                finish();
                 break;
         }
         return true;

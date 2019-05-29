@@ -17,8 +17,7 @@
         <activity android:name=".activity.SobreActivity" />
         <activity
             android:name=".activity.CarrinhoActivity"
-            android:label="Carrinho"
-            android:parentActivityName=".activity.ProdutosActivity" />
+            android:label="Carrinho"/>
         <activity android:name=".activity.ProdutoDetalheActivity" />
         <activity
             android:name=".activity.ClientesActivity"

@@ -63,8 +63,14 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto_admin);
 
+        //ativa o botão home na actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //obtém a instância do database
         database = FirebaseDatabase.getInstance();
+
+        //inicializa o objeto de modelo
+        produto = new Produto();
 
         //mapeia os componentes da UI
         etCodigoDeBarras = findViewById(R.id.etCodigoProduto);
@@ -100,9 +106,6 @@ public class ProdutoAdminActivity extends AppCompatActivity {
             }
         });
 
-        //inicializa o objeto de modelo
-        produto = new Produto();
-
         //salva o produto no database
         btSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,6 +115,16 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                         !etDescricao.getText().toString().isEmpty() &&
                         !etValor.getText().toString().isEmpty() &&
                         !etQuantidade.getText().toString().isEmpty() ){
+                    //prepara o objeto de modelo
+                    Long codigoDeBarras = Long.valueOf(etCodigoDeBarras.getText().toString());
+                    produto.setCodigoDeBarras(codigoDeBarras);
+                    produto.setNome(etNome.getText().toString());
+                    produto.setDescricao(etDescricao.getText().toString());
+                    String valor = etValor.getText().toString().replace(",", ".");
+                    produto.setValor(Double.valueOf(valor));
+                    produto.setQuantidade(Integer.valueOf(etQuantidade.getText().toString()));
+                    produto.setSituacao(true);
+                    Log.d(TAG, "Produto a ser salvo: " + produto);
                     if(fotoProduto != null){
                         uploadFotoDoProduto();
                     }else{
@@ -128,7 +141,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
 
     private void uploadFotoDoProduto() {
         //faz o upload da foto do produto no firebase storage
-        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("images/produtos/" + produto.getCodigoDeBarras() + ".jpeg");
+        StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("produtos/" + produto.getCodigoDeBarras() + ".jpeg");
         UploadTask uploadTask = mStorageRef.putBytes(fotoProduto);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -146,21 +159,11 @@ public class ProdutoAdminActivity extends AppCompatActivity {
     }
 
     private void salvarProduto(){
-        //carrega o objeto de modelo
-        Long codigoDeBarras = Long.valueOf(etCodigoDeBarras.getText().toString());
-        produto.setCodigoDeBarras(codigoDeBarras);
-        produto.setNome(etNome.getText().toString());
-        produto.setDescricao(etDescricao.getText().toString());
-        String valor = etValor.getText().toString().replace(",", ".");
-        produto.setValor(Double.valueOf(valor));
-        produto.setQuantidade(Integer.valueOf(etQuantidade.getText().toString()));
-        produto.setSituacao(true);
-        Log.d(TAG, "Produto a ser salvo: " + produto);
         if(flagInsertOrUpdate){//insert
             // obtém a referência do database
-            DatabaseReference myRef = database.getReference("vendas/produtos");
-            Log.d(TAG, "Barcode isNoBanco= " + codigoDeBarras);
-            Query query = myRef.orderByChild("codigoDeBarras").equalTo(codigoDeBarras).limitToFirst(1);
+            DatabaseReference myRef = database.getReference("produtos");
+            Log.d(TAG, "Barcode = " + produto.getCodigoDeBarras());
+            Query query = myRef.orderByChild("codigoDeBarras").equalTo(produto.getCodigoDeBarras()).limitToFirst(1);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
@@ -169,7 +172,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                         Toast.makeText(ProdutoAdminActivity.this, R.string.toast_codigo_barras_ja_cadastrado, Toast.LENGTH_SHORT).show();
                     }else{
                         showWait();
-                        DatabaseReference myRef = database.getReference("vendas/produtos");
+                        DatabaseReference myRef = database.getReference("produtos");
                         produto.setKey(myRef.push().getKey()); //cria o nó e devolve a key
                         myRef.child(produto.getKey()).setValue(produto) //salva o produto no database
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -199,7 +202,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         }else{ //update
             flagInsertOrUpdate = true;
             showWait();
-            DatabaseReference myRef = database.getReference("vendas/produtos/" + produto.getKey());
+            DatabaseReference myRef = database.getReference("produtos/" + produto.getKey());
             myRef.setValue(produto)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -247,11 +250,12 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, false); //true liga a lanterna (fash)
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
                 break;
-
 //            case R.id.menuitem_limparform_admin:
 //                limparForm();
 //                break;
-
+            case android.R.id.home:
+                finish();
+                break;
         }
         return true;
     }
@@ -290,7 +294,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
 
     private void buscarNoBanco(Long codigoDeBarras) {
         // obtém a referência do database
-        DatabaseReference myRef = database.getReference("vendas/produtos");
+        DatabaseReference myRef = database.getReference("produtos");
         Log.d(TAG, "Barcode = " + codigoDeBarras);
         Query query = myRef.orderByChild("codigoDeBarras").equalTo(codigoDeBarras).limitToFirst(1);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -300,7 +304,6 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 if(dataSnapshot.getValue() != null){
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
                         produto = ds.getValue(Produto.class);
-                        produto.setKey(ds.getKey()); //armazena a UUID gerada pelo banco
                     }
                     flagInsertOrUpdate = false;
                     carregarView();
@@ -326,7 +329,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         if(produto.getUrl_foto() != ""){
             pbFoto.setVisibility(ProgressBar.VISIBLE);
             if(AppSetup.cacheProdutos.get(produto.getKey()) == null){
-                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("images/produtos/" + produto.getCodigoDeBarras() + ".jpeg");
+                StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("produtos/" + produto.getCodigoDeBarras() + ".jpeg");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 mStorageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -339,7 +342,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         pbFoto.setVisibility(ProgressBar.INVISIBLE);
-                        Log.d(TAG, "Download da foto do produto falhou: " + "images/produtos" + produto.getCodigoDeBarras() + ".jpeg");
+                        Log.d(TAG, "Download da foto do produto falhou: " + "produtos" + produto.getCodigoDeBarras() + ".jpeg");
                     }
                 });
             }else{
@@ -379,8 +382,3 @@ public class ProdutoAdminActivity extends AppCompatActivity {
     }
 
 }//fim classe
-
-
-
-
-

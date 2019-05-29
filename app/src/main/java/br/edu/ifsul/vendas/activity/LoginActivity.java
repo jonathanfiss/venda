@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity {
         user.setFirebaseUser(firebaseUser);
         user.setFuncao("vendedor");
         user.setEmail(firebaseUser.getEmail());
-        FirebaseDatabase.getInstance().getReference().child("vendas/users")
+        FirebaseDatabase.getInstance().getReference().child("users")
                 .child(user.getFirebaseUser().getUid())
                 .setValue(user);
         AppSetup.user = user;
@@ -132,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setUserSessao(final FirebaseUser firebaseUser) {
 
         FirebaseDatabase.getInstance().getReference()
-                .child("vendas/users").child(firebaseUser.getUid())
+                .child("users").child(firebaseUser.getUid())
                 .addListenerForSingleValueEvent (new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
