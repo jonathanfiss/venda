@@ -80,4 +80,6 @@
     <string name="titulo_tela_produto_administracao">Produto (administração)</string>
     <string name="bt_salvar">Salvar</string>
     <string name="toast_problemas_signin">Problemas no signIn.</string>
+    <string name="input_error_invalido">Erro input</string>
+    <string name="snack_insira_email">Insira um E-mail</string>
 </resources>
