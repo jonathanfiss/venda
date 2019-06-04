@@ -82,4 +82,9 @@
     <string name="toast_problemas_signin">Problemas no signIn.</string>
     <string name="input_error_invalido">Erro input</string>
     <string name="snack_insira_email">Insira um E-mail</string>
+    <string name="esqueceu_senha_tela_login">Esqueceu a senha?</string>
+    <string name="menu_nav_usuario_admin">Usuário</string>
+    <string name="hint_sobrenome">Sobrenome</string>
+    <string name="btCadastrarUser">Cadastrar</string>
+    <string name="tv_funcao">Função</string>
 </resources>

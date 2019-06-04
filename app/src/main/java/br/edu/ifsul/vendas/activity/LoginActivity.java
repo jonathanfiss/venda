@@ -64,22 +64,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        //trata o evento onClick do button
-        findViewById(R.id.bt_sigup).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = etEmail.getText().toString();
-                String senha = etSenha.getText().toString();
-                if(!email.isEmpty() && !senha.isEmpty()) {
-                    signup(email,senha);
-                }else{
-                    Snackbar.make(findViewById(R.id.container_activity_login), "Preencha todos os campos.", Snackbar.LENGTH_LONG).show();
-                    etEmail.setError(getString(R.string.input_error_invalido));
-                    etSenha.setError(getString(R.string.input_error_invalido));
-                }
-            }
-        });
-
         //trata o evento onClick do textview (reset de senha)
         findViewById(R.id.tvEsqueceuSenha_tela_login).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,63 +90,6 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void signup(String email, String senha) {
-        mAuth.createUserWithEmailAndPassword(email, senha)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign up success, update UI with the signed-in user's information
-                            Log.d(TAG, "createUserWithEmail:success");
-                            cadastrarUser();
-                            sendEmailVerification();
-                        } else {
-                            // If sign up fails, display a message to the user.
-                            Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            if(Objects.requireNonNull(task.getException()).getMessage().contains("email")){
-                                Snackbar.make(findViewById(R.id.container_activity_login), R.string.email_already, Snackbar.LENGTH_LONG).show();
-                                etEmail.setError(getString(R.string.input_error_invalido));
-                            }else {
-                                Snackbar.make(findViewById(R.id.container_activity_login), R.string.signup_fail, Snackbar.LENGTH_LONG).show();
-                            }
-
-                        }
-                    }
-                });
-    }
-
-    private void cadastrarUser() {
-        User user = new User();
-        user.setFirebaseUser(mAuth.getCurrentUser());
-        user.setFuncao("vendedor");
-        user.setEmail(mAuth.getCurrentUser().getEmail());
-        FirebaseDatabase.getInstance().getReference().child("vendas/users")
-                .child(user.getFirebaseUser().getUid())
-                .setValue(user);
-        AppSetup.user = user;
-    }
-
-    private void sendEmailVerification() {
-        final FirebaseUser user = mAuth.getCurrentUser();
-        user.sendEmailVerification()
-                .addOnCompleteListener(this, new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this,
-                                    "Email de verificação enviado para " + user.getEmail(),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            Log.e(TAG, "sendEmailVerification", task.getException());
-                            Toast.makeText(LoginActivity.this,
-                                    "Envio de email para verifiacão falhou.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     private void signin(String email, String password){
@@ -198,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
     private void setUserSessao(final FirebaseUser firebaseUser) {
 
         FirebaseDatabase.getInstance().getReference()
-                .child("vendas/users").child(firebaseUser.getUid())
+                .child("users").child(firebaseUser.getUid())
                 .addListenerForSingleValueEvent (new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

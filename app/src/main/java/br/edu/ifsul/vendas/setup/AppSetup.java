@@ -3,6 +3,8 @@ package br.edu.ifsul.vendas.setup;
 import android.graphics.Bitmap;
 import android.hardware.camera2.CaptureRequest;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public class AppSetup {
     public static Cliente cliente = null;
     public static Pedido pedido = null;
     public static User user = null;
+    public static FirebaseAuth mAuth = null;
     public static Map<String, Bitmap> cacheProdutos = new HashMap<>();
+    public static Map<String, Bitmap> cacheClientes = new HashMap<>();
 
 }

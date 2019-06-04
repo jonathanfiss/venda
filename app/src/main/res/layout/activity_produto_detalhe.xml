@@ -67,7 +67,7 @@
         android:layout_marginLeft="16dp"
         android:background="@color/colorAccent"
         android:text="@string/bt_vender"
-        android:textColor="@color/font_white"
+        android:textColor="@color/fontColor"
         android:textSize="22sp"
         app:layout_constraintBaseline_toBaselineOf="@+id/etQuantidade"
         app:layout_constraintStart_toStartOf="parent" />

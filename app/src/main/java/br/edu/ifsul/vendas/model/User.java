@@ -5,6 +5,8 @@ import com.google.firebase.database.Exclude;
 
 public class User {
     private FirebaseUser firebaseUser;
+    private String Nome;
+    private String Sobrenome;
     private String Funcao;
     private String Email;
 
@@ -38,5 +40,21 @@ public class User {
 
     public void setEmail(String email) {
         Email = email;
+    }
+
+    public String getNome() {
+        return Nome;
+    }
+
+    public void setNome(String nome) {
+        Nome = nome;
+    }
+
+    public String getSobrenome() {
+        return Sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        Sobrenome = sobrenome;
     }
 }

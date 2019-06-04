@@ -12,12 +12,14 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ClienteAdminActivity"></activity>
+        <activity android:name=".activity.UsuarioAdminActivity"
+            android:label="Cadastrar Usuário"></activity>
+        <activity android:name=".activity.ClienteAdminActivity" />
         <activity android:name=".activity.ProdutoAdminActivity" />
         <activity android:name=".activity.SobreActivity" />
         <activity
             android:name=".activity.CarrinhoActivity"
-            android:label="Carrinho"/>
+            android:label="Carrinho" />
         <activity android:name=".activity.ProdutoDetalheActivity" />
         <activity
             android:name=".activity.ClientesActivity"
@@ -25,7 +27,14 @@
         <activity
             android:name=".activity.ProdutosActivity"
             android:label="Lista de Produtos"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:label="Aplicativo de Vendas">

@@ -192,7 +192,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         TextView tvUsuarioEmail = findViewById(R.id.tvEmailUsuario);
-        tvUsuarioEmail.setText(AppSetup.user.getEmail());
+//        tvUsuarioEmail.setText(AppSetup.user.getEmail());
         switch (menuItem.getItemId()) {
             case R.id.nav_carrinho: {
                 if (AppSetup.carrinho.isEmpty()) {
@@ -212,6 +212,10 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
             }
             case R.id.nav_cliente_administracao: {
                 startActivity(new Intent(ProdutosActivity.this, ClienteAdminActivity.class));
+                break;
+            }
+            case R.id.nav_usuario_administracao: {
+                startActivity(new Intent(ProdutosActivity.this, UsuarioAdminActivity.class));
                 break;
             }
             case R.id.nav_sobre: {
