@@ -51,8 +51,8 @@ public class UsuarioAdminActivity extends AppCompatActivity {
         //mapeia os campos de input
         etNomeUser = findViewById(R.id.etNomeUser);
         etSobrenomeUser = findViewById(R.id.etSobrenomeUser);
-        etEmailUser = findViewById(R.id.etEmail);
-        etPasswordUser = findViewById(R.id.etSenha);
+        etEmailUser = findViewById(R.id.etEmailUser);
+        etPasswordUser = findViewById(R.id.etPasswordUser);
         spFuncaoUser = findViewById(R.id.spFuncaoUser);
         cadastrar = findViewById(R.id.btCadastrarUser);
 

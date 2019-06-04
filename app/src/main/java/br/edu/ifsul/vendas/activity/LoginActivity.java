@@ -100,12 +100,12 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success
-                            if(mAuth.getCurrentUser().isEmailVerified()){
-                                Log.d(TAG, "signInWithEmail:success");
+//                            if(mAuth.getCurrentUser().isEmailVerified()){
+//                                Log.d(TAG, "signInWithEmail:success");
                                 setUserSessao(mAuth.getCurrentUser());
-                            }else{
-                                Snackbar.make(findViewById(R.id.container_activity_login), "Valide seu email para o singin.", Snackbar.LENGTH_LONG).show();
-                            }
+//                            }else{
+//                                Snackbar.make(findViewById(R.id.container_activity_login), "Valide seu email para o singin.", Snackbar.LENGTH_LONG).show();
+//                            }
 
                         } else {
                             // If sign in fails, display a message to the user.

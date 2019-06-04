@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ClienteAdminActivity">
+    tools:context=".activity.ClienteAdminActivity"
+    android:id="@+id/container_activity_cliente_admin">
 
 <android.support.v4.widget.NestedScrollView
     android:id="@+id/nestedScrollView"
@@ -46,7 +47,7 @@
             app:layout_constraintTop_toBottomOf="@+id/imvFoto" />
 
         <EditText
-            android:id="@+id/etCodigoProduto"
+            android:id="@+id/etCodigoCliente"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -64,19 +65,19 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/label_nome"
-            app:layout_constraintStart_toStartOf="@+id/etCodigoProduto"
-            app:layout_constraintTop_toBottomOf="@+id/etCodigoProduto" />
+            app:layout_constraintStart_toStartOf="@+id/etCodigoCliente"
+            app:layout_constraintTop_toBottomOf="@+id/etCodigoCliente" />
 
         <EditText
-            android:id="@+id/etNomeProdutoAdmin"
+            android:id="@+id/etNomeClienteAdmin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
-            android:hint="@string/hint_nome_produto"
+            android:hint="@string/hint_nome"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,95 +88,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/label_descricao"
-            app:layout_constraintStart_toStartOf="@+id/etNomeProdutoAdmin"
-            app:layout_constraintTop_toBottomOf="@+id/etNomeProdutoAdmin" />
+            android:text="@string/hint_cpf"
+            app:layout_constraintStart_toStartOf="@+id/etNomeClienteAdmin"
+            app:layout_constraintTop_toBottomOf="@+id/etSobrenomeClienteAdmin" />
 
         <EditText
-            android:id="@+id/etDescricaoProdutoAdmin"
+            android:id="@+id/etCPFClienteAdmin"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:ems="10"
-            android:hint="@string/hint_descricao_produto"
+            android:hint="@string/hint_cpf"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/label_valor"
-            app:layout_constraintStart_toStartOf="@+id/etDescricaoProdutoAdmin"
-            app:layout_constraintTop_toBottomOf="@+id/etDescricaoProdutoAdmin" />
-
-        <EditText
-            android:id="@+id/etValorProdutoAdmin"
-            android:layout_width="174dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:digits="0123456789,"
-            android:ems="10"
-            android:hint="@string/hint_digite_valor"
-            android:inputType="numberDecimal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_quantidade"
-            app:layout_constraintStart_toStartOf="@+id/etValorProdutoAdmin"
-            app:layout_constraintTop_toBottomOf="@+id/etValorProdutoAdmin" />
-
-        <EditText
-            android:id="@+id/etQuantidadeProdutoAdmin"
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginStart="8dp"
-            android:ems="10"
-            android:hint="@string/hint_quantidade_digite"
-            android:inputType="numberSigned"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
         <Button
-            android:id="@+id/btInserirProdutoAdmin"
+            android:id="@+id/btInserirClienteAdmin"
             android:layout_width="142dp"
             android:layout_height="57dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginLeft="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="32dp"
             android:background="@color/colorAccent"
             android:text="@string/bt_salvar"
             android:textColor="@color/fontColor"
             android:textSize="22sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.363"
-            app:layout_constraintStart_toEndOf="@+id/etQuantidadeProdutoAdmin"
-            app:layout_constraintTop_toTopOf="@+id/etValorProdutoAdmin"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etCPFClienteAdmin" />
 
         <ImageButton
             android:id="@+id/imb_pesquisar"
@@ -185,14 +130,14 @@
             android:layout_marginLeft="8dp"
             android:background="@color/colorAccent"
             android:contentDescription="@string/menu_pesquisar"
-            app:layout_constraintBottom_toBottomOf="@+id/etCodigoProduto"
-            app:layout_constraintEnd_toEndOf="@+id/etNomeProdutoAdmin"
-            app:layout_constraintStart_toEndOf="@+id/etCodigoProduto"
-            app:layout_constraintTop_toTopOf="@+id/etCodigoProduto"
+            app:layout_constraintBottom_toBottomOf="@+id/etCodigoCliente"
+            app:layout_constraintEnd_toEndOf="@+id/etNomeClienteAdmin"
+            app:layout_constraintStart_toEndOf="@+id/etCodigoCliente"
+            app:layout_constraintTop_toTopOf="@+id/etCodigoCliente"
             app:srcCompat="@drawable/ic_search_white_24dp" />
 
         <ProgressBar
-            android:id="@+id/pb_foto_produto_admin"
+            android:id="@+id/pb_foto_cliente_admin"
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,6 +146,31 @@
             app:layout_constraintEnd_toEndOf="@+id/imvFoto"
             app:layout_constraintStart_toStartOf="@+id/imvFoto"
             app:layout_constraintTop_toTopOf="@+id/imvFoto" />
+
+        <EditText
+            android:id="@+id/etSobrenomeClienteAdmin"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:ems="10"
+            android:hint="@string/hint_sobrenome"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/hint_sobrenome"
+            app:layout_constraintStart_toStartOf="@+id/etNomeClienteAdmin"
+            app:layout_constraintTop_toBottomOf="@+id/etNomeClienteAdmin" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v4.widget.NestedScrollView>

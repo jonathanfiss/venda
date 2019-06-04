@@ -192,7 +192,9 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         TextView tvUsuarioEmail = findViewById(R.id.tvEmailUsuario);
-//        tvUsuarioEmail.setText(AppSetup.user.getEmail());
+        TextView tvUsuarioNome = findViewById(R.id.tvUsuarioNome);
+        tvUsuarioEmail.setText(AppSetup.user.getEmail());
+        tvUsuarioNome.setText(AppSetup.user.getNome());
         switch (menuItem.getItemId()) {
             case R.id.nav_carrinho: {
                 if (AppSetup.carrinho.isEmpty()) {
@@ -224,8 +226,8 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
             }
             case R.id.nav_sair: {
                 FirebaseAuth.getInstance().signOut();
-                finish();
-//                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
+//                finish();
+                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
                 break;
             }
 

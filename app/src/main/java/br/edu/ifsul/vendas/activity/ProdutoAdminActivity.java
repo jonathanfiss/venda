@@ -73,15 +73,15 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         produto = new Produto();
 
         //mapeia os componentes da UI
-        etCodigoDeBarras = findViewById(R.id.etCodigoProduto);
-        etNome = findViewById(R.id.etNomeProdutoAdmin);
-        etDescricao = findViewById(R.id.etDescricaoProdutoAdmin);
+        etCodigoDeBarras = findViewById(R.id.etCodigoCliente);
+        etNome = findViewById(R.id.etNomeClienteAdmin);
+        etDescricao = findViewById(R.id.etCPFClienteAdmin);
         etValor = findViewById(R.id.etValorProdutoAdmin);
         etQuantidade = findViewById(R.id.etQuantidadeProdutoAdmin);
-        btSalvar = findViewById(R.id.btInserirProdutoAdmin);
+        btSalvar = findViewById(R.id.btInserirClienteAdmin);
         imvFoto = findViewById(R.id.imvFoto);
         imbPesquisar = findViewById(R.id.imb_pesquisar);
-        pbFoto = findViewById(R.id.pb_foto_produto_admin);
+        pbFoto = findViewById(R.id.pb_foto_cliente_admin);
 
         //busca a foto do produto na galeria
         imvFoto.setOnClickListener(new View.OnClickListener() {
@@ -250,9 +250,9 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, false); //true liga a lanterna (fash)
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
                 break;
-//            case R.id.menuitem_limparform_admin:
-//                limparForm();
-//                break;
+            case R.id.menuitem_limparform_admin:
+                limparForm();
+                break;
             case android.R.id.home:
                 finish();
                 break;

@@ -64,10 +64,13 @@
     <string name="titulo_janela_galeria_imagens">Selecione uma imagem</string>
     <string name="snack_preencher_todos_campos">Todos os campos devem ser preenchidos.</string>
     <string name="toast_foto_produto_upload_fail">A foto do produto não foi salva.</string>
+    <string name="toast_foto_cliente_upload_fail">A foto do cliente não foi salva.</string>
     <string name="toast_codigo_barras_ja_cadastrado">Código de barras já cadastrado.</string>
     <string name="toast_produto_salvo">Produto salvo.</string>
+    <string name="toast_cliente_salvo">Cliente salvo.</string>
     <string name="snack_operacao_falhou">Operação falhou.</string>
     <string name="toast_produto_nao_cadastrado">Produto não cadastrado.</string>
+    <string name="toast_cliente_nao_cadastrado">Cliente não cadastrado.</string>
     <string name="message_processando">Processando ...</string>
     <string name="label_codigo_de_barras">Código De Barras</string>
     <string name="hint_codigo_de_barras">Utilize o leitor ou digite</string>

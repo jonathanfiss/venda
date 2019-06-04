@@ -40,14 +40,13 @@ import java.io.FileNotFoundException;
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.barcode.BarcodeCaptureActivity;
 import br.edu.ifsul.vendas.model.Cliente;
-import br.edu.ifsul.vendas.model.Produto;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
 public class ClienteAdminActivity extends AppCompatActivity {
 
     private static final String TAG = "clienteAdminActivity";
     private static final int RC_BARCODE_CAPTURE = 1, RC_GALERIA_IMAGE_PICK = 2;
-    private EditText etCodigoDeBarras, etNome, etDescricao, etValor, etQuantidade;
+    private EditText etCodigoDeBarras, etNome, etSobrenome, etCPF;
     private Button btSalvar;
     private ImageView imvFoto;
     private Cliente cliente;
@@ -74,15 +73,14 @@ public class ClienteAdminActivity extends AppCompatActivity {
         cliente = new Cliente();
 
         //mapeia os componentes da UI
-        etCodigoDeBarras = findViewById(R.id.etCodigoProduto);
-        etNome = findViewById(R.id.etNomeProdutoAdmin);
-        etDescricao = findViewById(R.id.etDescricaoProdutoAdmin);
-        etValor = findViewById(R.id.etValorProdutoAdmin);
-        etQuantidade = findViewById(R.id.etQuantidadeProdutoAdmin);
-        btSalvar = findViewById(R.id.btInserirProdutoAdmin);
+        etCodigoDeBarras = findViewById(R.id.etCodigoCliente);
+        etNome = findViewById(R.id.etNomeClienteAdmin);
+        etSobrenome = findViewById(R.id.etSobrenomeClienteAdmin);
+        etCPF = findViewById(R.id.etCPFClienteAdmin);
+        btSalvar = findViewById(R.id.btInserirClienteAdmin);
         imvFoto = findViewById(R.id.imvFoto);
         imbPesquisar = findViewById(R.id.imb_pesquisar);
-        pbFoto = findViewById(R.id.pb_foto_produto_admin);
+        pbFoto = findViewById(R.id.pb_foto_cliente_admin);
 
         //busca a foto do produto na galeria
         imvFoto.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +88,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 //cria uma Intent
                 //primeiro argumento: ação ACTION_PICK "pegar algum dado"
-                //segundo argumento: refina a ação para arquivos de fotoProduto, na galeria do dispositivo, retornando um URI
+                //segundo argumento: refina a ação para arquivos de fotoCliente, na galeria do dispositivo, retornando um URI
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 //inicializa uma Activity esperando o seu resultado. Neste caso, uma que forneca acesso a galeria de imagens do dispositivo.
                 startActivityForResult(Intent.createChooser(intent,getString(R.string.titulo_janela_galeria_imagens)), RC_GALERIA_IMAGE_PICK);
@@ -113,18 +111,15 @@ public class ClienteAdminActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!etCodigoDeBarras.getText().toString().isEmpty() &&
                         !etNome.getText().toString().isEmpty() &&
-                        !etDescricao.getText().toString().isEmpty() &&
-                        !etValor.getText().toString().isEmpty() &&
-                        !etQuantidade.getText().toString().isEmpty() ){
+                        !etSobrenome.getText().toString().isEmpty() &&
+                        !etCPF.getText().toString().isEmpty()){
                     //prepara o objeto de modelo
                     Long codigoDeBarras = Long.valueOf(etCodigoDeBarras.getText().toString());
-                    produto.setCodigoDeBarras(codigoDeBarras);
-                    produto.setNome(etNome.getText().toString());
-                    produto.setDescricao(etDescricao.getText().toString());
-                    String valor = etValor.getText().toString().replace(",", ".");
-                    produto.setValor(Double.valueOf(valor));
-                    produto.setQuantidade(Integer.valueOf(etQuantidade.getText().toString()));
-                    produto.setSituacao(true);
+                    cliente.setCodigoDeBarras(codigoDeBarras);
+                    cliente.setNome(etNome.getText().toString());
+                    cliente.setSobrenome(etSobrenome.getText().toString());
+                    cliente.setCpf(etCPF.getText().toString());
+                    cliente.setSituacao(true);
                     Log.d(TAG, "Cliente a ser salvo: " + cliente);
                     if(fotoCliente != null){
                         uploadFotoDoCliente();
@@ -132,7 +127,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                         salvarCliente();
                     }
                 }else{
-                    Snackbar.make(findViewById(R.id.container_activity_produtoadmin), R.string.snack_preencher_todos_campos, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(findViewById(R.id.container_activity_cliente_admin), R.string.snack_preencher_todos_campos, Snackbar.LENGTH_LONG).show();
                 }
 
             }
@@ -141,13 +136,13 @@ public class ClienteAdminActivity extends AppCompatActivity {
     }
 
     private void uploadFotoDoCliente() {
-        //faz o upload da foto do produto no firebase storage
+        //faz o upload da foto do cliente no firebase storage
         StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("clientes/" + cliente.getCodigoDeBarras() + ".jpeg");
         UploadTask uploadTask = mStorageRef.putBytes(fotoCliente);
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {
-                Toast.makeText(ClienteAdminActivity.this, getString(R.string.toast_foto_produto_upload_fail), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ClienteAdminActivity.this, getString(R.string.toast_foto_cliente_upload_fail), Toast.LENGTH_SHORT).show();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -162,7 +157,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
     private void salvarCliente(){
         if(flagInsertOrUpdate){//insert
             // obtém a referência do database
-            DatabaseReference myRef = database.getReference("cliente");
+            DatabaseReference myRef = database.getReference("clientes");
             Log.d(TAG, "Barcode = " + cliente.getCodigoDeBarras());
             Query query = myRef.orderByChild("codigoDeBarras").equalTo(cliente.getCodigoDeBarras()).limitToFirst(1);
             query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,13 +168,13 @@ public class ClienteAdminActivity extends AppCompatActivity {
                         Toast.makeText(ClienteAdminActivity.this, R.string.toast_codigo_barras_ja_cadastrado, Toast.LENGTH_SHORT).show();
                     }else{
                         showWait();
-                        DatabaseReference myRef = database.getReference("cliente");
+                        DatabaseReference myRef = database.getReference("clientes");
                         cliente.setKey(myRef.push().getKey()); //cria o nó e devolve a key
-                        myRef.child(cliente.getKey()).setValue(cliente) //salva o produto no database
+                        myRef.child(cliente.getKey()).setValue(cliente) //salva o cliente no database
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(ClienteAdminActivity.this, getString(R.string.toast_produto_salvo), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ClienteAdminActivity.this, getString(R.string.toast_cliente_salvo), Toast.LENGTH_SHORT).show();
                                         limparForm();
                                         dismissWait();
                                     }
@@ -187,7 +182,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                                 .addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Snackbar.make(findViewById(R.id.container_activity_produtoadmin), R.string.snack_operacao_falhou, Snackbar.LENGTH_LONG).show();//tem que trocar a variavel
+                                        Snackbar.make(findViewById(R.id.container_activity_cliente_admin), R.string.snack_operacao_falhou, Snackbar.LENGTH_LONG).show();//tem que trocar a variavel
                                         dismissWait();
                                     }
                                 });
@@ -216,7 +211,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Snackbar.make(findViewById(R.id.container_activity_produtoadmin), R.string.snack_operacao_falhou, Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(findViewById(R.id.container_activity_cliente_admin), R.string.snack_operacao_falhou, Snackbar.LENGTH_LONG).show();
                             dismissWait();
                         }
                     });
@@ -229,15 +224,14 @@ public class ClienteAdminActivity extends AppCompatActivity {
         fotoCliente = null;
         etCodigoDeBarras.setText(null);
         etNome.setText(null);
-        etDescricao.setText(null);
-        etValor.setText(null);
-        etQuantidade.setText(null);
-        imvFoto.setImageResource(R.drawable.img_carrinho_de_compras);
+        etSobrenome.setText(null);
+        etCPF.setText(null);
+        imvFoto.setImageResource(R.drawable.img_cliente_icon_524x524);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_activity_produto_admin, menu);
+        getMenuInflater().inflate(R.menu.menu_activity_cliente_admin, menu);
         return true;
     }
 
@@ -251,9 +245,9 @@ public class ClienteAdminActivity extends AppCompatActivity {
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, false); //true liga a lanterna (fash)
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
                 break;
-//            case R.id.menuitem_limparform_admin:
-//                limparForm();
-//                break;
+            case R.id.menuitem_limparform_admin:
+                limparForm();
+                break;
             case android.R.id.home:
                 finish();
                 break;
@@ -279,13 +273,13 @@ public class ClienteAdminActivity extends AppCompatActivity {
         } else if(requestCode == RC_GALERIA_IMAGE_PICK){
             if (resultCode == RESULT_OK) {
                 arquivoUri = data.getData();
-                Log.d(TAG, "Uri da fotoProduto: " + arquivoUri);
+                Log.d(TAG, "Uri da fotoCliente: " + arquivoUri);
                 imvFoto.setImageURI(arquivoUri);
                 try {
                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(arquivoUri));
                     bitmap = Bitmap.createScaledBitmap(bitmap, 200, 200, true); //reduz e aplica um filtro na fotoProduto
                     byte[] img = getBitmapAsByteArray(bitmap); //converte para um fluxo de bytes
-                    fotoCliente = img; //coloca a fotoProduto no objeto fotoProduto (um array de bytes (byte[]))
+                    fotoCliente = img; //coloca a fotoCliente no objeto fotoCliente (um array de bytes (byte[]))
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -295,7 +289,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
 
     private void buscarNoBanco(Long codigoDeBarras) {
         // obtém a referência do database
-        DatabaseReference myRef = database.getReference("produtos");
+        DatabaseReference myRef = database.getReference("clientes");
         Log.d(TAG, "Barcode = " + codigoDeBarras);
         Query query = myRef.orderByChild("codigoDeBarras").equalTo(codigoDeBarras).limitToFirst(1);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -324,9 +318,8 @@ public class ClienteAdminActivity extends AppCompatActivity {
         etCodigoDeBarras.setText(cliente.getCodigoDeBarras().toString());
         etCodigoDeBarras.setEnabled(false);
         etNome.setText(cliente.getNome());
-        etDescricao.setText(cliente.getDescricao());
-        etValor.setText(String.format("%.2f", cliente.getValor()));
-        etQuantidade.setText(cliente.getQuantidade().toString());
+        etSobrenome.setText(cliente.getSobrenome());
+        etCPF.setText(cliente.getCpf());
         if(cliente.getUrl_foto() != ""){
             pbFoto.setVisibility(ProgressBar.VISIBLE);
             if(AppSetup.cacheClientes.get(cliente.getKey()) == null){
@@ -343,7 +336,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         pbFoto.setVisibility(ProgressBar.INVISIBLE);
-                        Log.d(TAG, "Download da foto do produto falhou: " + "produtos" + cliente.getCodigoDeBarras() + ".jpeg");
+                        Log.d(TAG, "Download da foto do cliente falhou: " + "cliente" + cliente.getCodigoDeBarras() + ".jpeg");
                     }
                 });
             }else{
