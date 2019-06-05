@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,7 +114,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            verificar se quer fechar o aplicativo
+            verificaSair();
             super.onBackPressed();
         }
     }
@@ -199,6 +200,10 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         TextView tvUsuarioNome = findViewById(R.id.tvUsuarioNome);
         tvUsuarioEmail.setText(AppSetup.user.getEmail());
         tvUsuarioNome.setText(AppSetup.user.getNome());
+        if (AppSetup.user.getFuncao().equals("Vendedor")){
+            MenuItem item = findViewById(R.id.groupAdm);
+            item.setVisible(false);
+        }
         switch (menuItem.getItemId()) {
             case R.id.nav_carrinho: {
                 if (AppSetup.carrinho.isEmpty()) {
@@ -233,32 +238,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
                     AppSetup.mAuth.signOut();
                     startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
                 } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-                    builder.setTitle(R.string.title_confimar);
-                    builder.setMessage(R.string.message_confirma_sair);
-
-                    builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            for (ItemPedido item : AppSetup.carrinho) {
-                                DatabaseReference myRef = database.getReference("produtos/" + item.getProduto().getKey() + "/quantidade");
-                                myRef.setValue(item.getQuantidade() + item.getProduto().getQuantidade());
-                                Log.d("removido", item.toString());
-                                Log.d("item", "item removido");
-                            }
-                            AppSetup.carrinho.clear();
-                            AppSetup.cliente = null;
-                            AppSetup.mAuth.signOut();
-                            startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
-                        }
-                    });
-                    builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-                    builder.show();
+                    verificaSair();
                 }
                 break;
             }
@@ -267,6 +247,34 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void verificaSair(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle(R.string.title_confimar);
+        builder.setMessage(R.string.message_confirma_sair);
+
+        builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (ItemPedido item : AppSetup.carrinho) {
+                    DatabaseReference myRef = database.getReference("produtos/" + item.getProduto().getKey() + "/quantidade");
+                    myRef.setValue(item.getQuantidade() + item.getProduto().getQuantidade());
+                    Log.d("removido", item.toString());
+                    Log.d("item", "item removido");
+                }
+                AppSetup.carrinho.clear();
+                AppSetup.cliente = null;
+                AppSetup.mAuth.signOut();
+                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
+            }
+        });
+        builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        builder.show();
     }
 }
 
