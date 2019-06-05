@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -66,6 +67,21 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View headerMain = navigationView.getHeaderView(0);
+        TextView tvUsuarioEmail = headerMain.findViewById(R.id.tvEmailUsuario);
+        TextView tvUsuarioNome = headerMain.findViewById(R.id.tvUsuarioNome);
+
+        tvUsuarioEmail.setText(AppSetup.user.getEmail());
+        tvUsuarioNome.setText(AppSetup.user.getNome());
+
+
+        if (AppSetup.user.getFuncao().equals("Vendedor")){
+            navigationView.getMenu().getItem(R.id.nav_produto_adminstracao).setVisible(false);
+            navigationView.getMenu().getItem(R.id.nav_cliente_administracao).setVisible(false);
+            navigationView.getMenu().getItem(R.id.nav_usuario_administracao).setVisible(false);
+//            como acessar header de um drawer menu android
+        }
+
         lvProdutos = findViewById(R.id.lv_produtos);
         lvProdutos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -96,6 +112,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
                 }
 
                 //carrega os dados na View
+
                 lvProdutos.setAdapter(new ProdutosAdapter(ProdutosActivity.this, AppSetup.produtos));
 
             }
@@ -196,14 +213,6 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        TextView tvUsuarioEmail = findViewById(R.id.tvEmailUsuario);
-        TextView tvUsuarioNome = findViewById(R.id.tvUsuarioNome);
-        tvUsuarioEmail.setText(AppSetup.user.getEmail());
-        tvUsuarioNome.setText(AppSetup.user.getNome());
-        if (AppSetup.user.getFuncao().equals("Vendedor")){
-            MenuItem item = findViewById(R.id.groupAdm);
-            item.setVisible(false);
-        }
         switch (menuItem.getItemId()) {
             case R.id.nav_carrinho: {
                 if (AppSetup.carrinho.isEmpty()) {

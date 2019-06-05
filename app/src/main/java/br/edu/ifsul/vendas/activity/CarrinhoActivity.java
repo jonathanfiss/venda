@@ -193,7 +193,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
                     myRef.child(key).setValue(pedido);
 
-                    AppSetup.clientes = null;
+                    AppSetup.cliente = null;
                     AppSetup.carrinho.clear();
                     AppSetup.pedido = null;
                     finish();
