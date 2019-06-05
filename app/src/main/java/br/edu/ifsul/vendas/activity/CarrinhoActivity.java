@@ -233,20 +233,3 @@ public class CarrinhoActivity extends AppCompatActivity {
         tvTotalPedidoCarrinho.setText(NumberFormat.getCurrencyInstance().format(total));
     }
 }
-
-//
-//salvar no banco
-//salva cliente
-//datacriaçã
-//datamodificação
-//estado"aberto/fechado"
-//formade pagamento avista/prazo
-//itens salva itens
-//key
-//situaçao true
-////totalpedido
-// cria pedido
-//   seta o pedido no no salva
-//    metodo recebe pedido
-//string key = myref.push().getkey();
-//my.child(key)

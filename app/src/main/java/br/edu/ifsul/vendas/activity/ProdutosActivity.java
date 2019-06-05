@@ -1,5 +1,6 @@
 package br.edu.ifsul.vendas.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -35,6 +37,7 @@ import java.util.List;
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.ProdutosAdapter;
 import br.edu.ifsul.vendas.barcode.BarcodeCaptureActivity;
+import br.edu.ifsul.vendas.model.ItemPedido;
 import br.edu.ifsul.vendas.model.Produto;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
@@ -43,6 +46,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
     private static final String TAG = "produtosactivity";
     private static final int RC_BARCODE_CAPTURE = 1;
     private ListView lvProdutos;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -225,9 +229,37 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
                 break;
             }
             case R.id.nav_sair: {
-                FirebaseAuth.getInstance().signOut();
-//                finish();
-                startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
+                if (AppSetup.carrinho.isEmpty()) {
+                    AppSetup.mAuth.signOut();
+                    startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                    builder.setTitle(R.string.title_confimar);
+                    builder.setMessage(R.string.message_confirma_sair);
+
+                    builder.setPositiveButton(R.string.alertdialog_sim, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            for (ItemPedido item : AppSetup.carrinho) {
+                                DatabaseReference myRef = database.getReference("produtos/" + item.getProduto().getKey() + "/quantidade");
+                                myRef.setValue(item.getQuantidade() + item.getProduto().getQuantidade());
+                                Log.d("removido", item.toString());
+                                Log.d("item", "item removido");
+                            }
+                            AppSetup.carrinho.clear();
+                            AppSetup.cliente = null;
+                            AppSetup.mAuth.signOut();
+                            startActivity(new Intent(ProdutosActivity.this, LoginActivity.class));
+                        }
+                    });
+                    builder.setNegativeButton(R.string.alertdialog_nao, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    builder.show();
+                }
                 break;
             }
 

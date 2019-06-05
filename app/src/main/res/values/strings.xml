@@ -50,6 +50,7 @@
     <string name="snack_operacao_cancelada">Operação Cancelada</string>
     <string name="title_confimar">Confirmação</string>
     <string name="message_confirma_cancelar">Você tem certeza que deseja cancelar a compra?</string>
+    <string name="message_confirma_sair">Você tem certeza que deseja sair? O seu pedido será cancelado</string>
     <string name="message_confirma_salvar">Você deseja finalizar o pedido?</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
