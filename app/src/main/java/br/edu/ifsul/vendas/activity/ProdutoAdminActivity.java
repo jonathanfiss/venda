@@ -128,6 +128,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                     if(fotoProduto != null){
                         uploadFotoDoProduto();
                     }else{
+                        produto.setUrl_foto("");
                         salvarProduto();
                     }
                 }else{

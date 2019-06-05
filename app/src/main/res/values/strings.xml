@@ -91,4 +91,5 @@
     <string name="hint_sobrenome">Sobrenome</string>
     <string name="btCadastrarUser">Cadastrar</string>
     <string name="tv_funcao">Função</string>
+    <string name="tv_sobre">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vulputate est vitae elit dictum, nec condimentum ligula suscipit. Morbi volutpat vestibulum diam at commodo. Curabitur quis ante urna. Suspendisse leo eros, vulputate at lacus id, vestibulum ornare augue. In mauris sapien, feugiat nec consequat a, varius eu justo. Sed congue lobortis libero, auctor auctor purus dictum sed. Aenean elementum dui at ligula venenatis hendrerit. Duis erat odio, aliquam eu consectetur sed, convallis sit amet lacus. Donec tempor turpis ac ullamcorper eleifend. Nullam viverra nunc vitae congue consectetur. Ut lectus dui, tempus sit amet suscipit nec, scelerisque fringilla erat. Nulla accumsan arcu vitae magna ullamcorper, nec vestibulum nunc fringilla. Vestibulum mattis ac nisi at gravida. Praesent vitae diam ac nulla pharetra consectetur tempor eu odio. Sed convallis volutpat ligula in congue.</string>
 </resources>

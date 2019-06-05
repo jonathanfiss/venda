@@ -124,6 +124,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                     if(fotoCliente != null){
                         uploadFotoDoCliente();
                     }else{
+                        cliente.setUrl_foto("");
                         salvarCliente();
                     }
                 }else{

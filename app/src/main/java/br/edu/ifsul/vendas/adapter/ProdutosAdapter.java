@@ -113,48 +113,4 @@ public class ProdutosAdapter extends ArrayAdapter<Produto> {
             pbFotoProduto = view.findViewById(R.id.pb_foto_produtos_adapter);
         }
     }
-
 }
-
-//
-//public class ProdutosAdapter extends ArrayAdapter<Produto> {
-//
-//    private Context context;
-//    private List<Produto> produtos;
-//
-//    public ProdutosAdapter(@NonNull Context context, @NonNull List<Produto> produtos) {
-//        super(context, 0, produtos);
-//        this.context = context;
-//    }
-//
-//    @NonNull
-//    @Override
-//    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-//        //Devolve o objeto do modelo
-//        Produto produto = getItem(position);
-//
-//        //infla a view
-//        if (convertView == null) {
-//            convertView = LayoutInflater.from(context).inflate(R.layout.item_produto_adapter, parent, false);
-//        }
-//
-//        //mapeia os componentes da UI para vincular os dados do objeto de modelo
-//        TextView tvNome = convertView.findViewById(R.id.tvNomeProdutoAdapter);
-//        TextView tvEstoque = convertView.findViewById(R.id.tvEstoqueProdutoAdapater);
-//        TextView tvValor = convertView.findViewById(R.id.tvValorProdutoItemAdapter);
-//        ImageView imvFoto = convertView.findViewById(R.id.imvFotoProdutoAdapter);
-//
-//        //vincula os dados do objeto de modelo à view
-//        tvNome.setText(produto.getNome());
-//        tvEstoque.setText(produto.getQuantidade().toString());
-//        tvValor.setText(NumberFormat.getCurrencyInstance().format(produto.getValor()));
-//        if (produto.getUrl_foto() != null) {
-//            //aqui vai vincular a foto do produto vindo do firebase usando a biblioteca Picasso
-//        } else {
-//            imvFoto.setImageResource(R.drawable.img_carrinho_de_compras);
-//        }
-//
-//
-//        return convertView;
-//    }
-//}
