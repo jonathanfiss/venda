@@ -226,7 +226,6 @@ public class CarrinhoActivity extends AppCompatActivity {
     public void atualizaView() {
         TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
-        Double total = 0.0;
         for (ItemPedido itemPedido : AppSetup.carrinho) {
             total = total + itemPedido.getTotalItem();
         }
