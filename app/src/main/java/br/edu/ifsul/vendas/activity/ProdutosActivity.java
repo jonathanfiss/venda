@@ -67,6 +67,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         View headerMain = navigationView.getHeaderView(0);
         TextView tvUsuarioEmail = headerMain.findViewById(R.id.tvEmailUsuario);
         TextView tvUsuarioNome = headerMain.findViewById(R.id.tvUsuarioNome);
@@ -75,11 +76,8 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         tvUsuarioNome.setText(AppSetup.user.getNome());
 
 
-        if (AppSetup.user.getFuncao().equals("Vendedor")){
-            navigationView.getMenu().getItem(R.id.nav_produto_adminstracao).setVisible(false);
-            navigationView.getMenu().getItem(R.id.nav_cliente_administracao).setVisible(false);
-            navigationView.getMenu().getItem(R.id.nav_usuario_administracao).setVisible(false);
-//            como acessar header de um drawer menu android
+        if (!AppSetup.user.getFuncao().equals("Vendedor")){
+            navigationView.getMenu().findItem(R.id.groupAdm).setVisible(true);
         }
 
         lvProdutos = findViewById(R.id.lv_produtos);
