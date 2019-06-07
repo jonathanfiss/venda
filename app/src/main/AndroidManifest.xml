@@ -12,34 +12,47 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.UsuarioAdminActivity"
+        <activity
+            android:name=".activity.UsuarioAdminActivity"
             android:label="Cadastrar Usuário"></activity>
-        <activity android:name=".activity.ClienteAdminActivity" />
-        <activity android:name=".activity.ProdutoAdminActivity" />
-        <activity android:name=".activity.SobreActivity" />
+
+        <activity
+            android:name=".activity.ClienteAdminActivity"
+            android:label="Administração Clientes"/>
+
+        <activity
+            android:name=".activity.ProdutoAdminActivity"
+            android:label="Administração Produtos"/>
+
+        <activity
+            android:name=".activity.SobreActivity"
+            android:label="Sobre"/>
+
         <activity
             android:name=".activity.CarrinhoActivity"
             android:label="Carrinho" />
         <activity android:name=".activity.ProdutoDetalheActivity" />
+
         <activity
             android:name=".activity.ClientesActivity"
             android:label="Lista de Clientes" />
+
         <activity
             android:name=".activity.ProdutosActivity"
             android:label="Lista de Produtos"
             android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
+
         <activity
             android:name=".activity.LoginActivity"
             android:label="Aplicativo de Vendas">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".barcode.BarcodeCaptureActivity"
             android:label="Leitor de código" />
