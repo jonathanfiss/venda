@@ -76,7 +76,7 @@ public class ProdutosActivity extends AppCompatActivity implements NavigationVie
         tvUsuarioNome.setText(AppSetup.user.getNome());
 
 
-        if (!AppSetup.user.getFuncao().equals("Vendedor")){
+        if (AppSetup.user.getFuncao().equals("Administrador")){
             navigationView.getMenu().findItem(R.id.groupAdm).setVisible(true);
         }
 

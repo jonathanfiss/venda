@@ -12,9 +12,9 @@ public class User {
 
     public User() {
     }
-
     @Exclude
-    public Firebase User getFirebaseUser() {
+
+    public FirebaseUser getFirebaseUser() {
         return firebaseUser;
     }
 

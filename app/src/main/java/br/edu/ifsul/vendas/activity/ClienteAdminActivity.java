@@ -130,10 +130,8 @@ public class ClienteAdminActivity extends AppCompatActivity {
                 }else{
                     Snackbar.make(findViewById(R.id.container_activity_cliente_admin), R.string.snack_preencher_todos_campos, Snackbar.LENGTH_LONG).show();
                 }
-
             }
         });
-
     }
 
     private void uploadFotoDoCliente() {
