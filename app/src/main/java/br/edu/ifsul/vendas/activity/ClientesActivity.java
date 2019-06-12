@@ -65,11 +65,10 @@ public class ClientesActivity extends AppCompatActivity {
 
 //                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
 
-                clientes = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Cliente cliente = ds.getValue(Cliente.class);
                     cliente.setKey(ds.getKey());
-                    clientes.add(cliente);
+                    AppSetup.clientes.add(cliente);
                 }
 
                 //carrega os dados na View
@@ -124,7 +123,7 @@ public class ClientesActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String newText) {
                 List<Cliente> clientesTemp = new ArrayList<>();
-                for (Cliente cliente : clientes) {
+                for (Cliente cliente : AppSetup.clientes) {
                     if (cliente.getNome().contains(newText)) {
                         clientesTemp.add(cliente);
                     }
@@ -158,21 +157,19 @@ public class ClientesActivity extends AppCompatActivity {
                     Barcode barcode = data.getParcelableExtra(BarcodeCaptureActivity.BarcodeObject);
                     //Toast.makeText(this, barcode.displayValue, Toast.LENGTH_SHORT).show();
                     Log.d(TAG, "Barcode read: " + barcode.displayValue);
-                    //localiza o produto na lista (ou não)
+                    //localiza o clientes na lista (ou não)
                     boolean flag = true;
                     int position = 0;
-                    for (Cliente cliente : clientes) {
+                    for (Cliente cliente : AppSetup.clientes) {
                         if (String.valueOf(cliente.getCodigoDeBarras()).equals(barcode.displayValue)) {
                             flag = false;
-                            Intent intent = new Intent(ClientesActivity.this, ClienteDetalheActivity.class);
-                            intent.putExtra("position", position);
-                            startActivity(intent);
+                            selecionarCliente(position);
                             break;
                         }
                         position++;
                     }
                     if (flag) {
-                        Snackbar.make(findViewById(R.id.container_activity_produtos), "codigo de barras não cadastrado", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(findViewById(R.id.container_activity_clientes), "codigo de barras não cadastrado", Snackbar.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(this, "Falha na leitura do código", Toast.LENGTH_SHORT).show();

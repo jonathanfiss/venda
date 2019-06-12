@@ -12,7 +12,8 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ClientesListaActivity"></activity>
+        <activity android:name=".activity.PedidosActivity"></activity>
+        <activity android:name=".activity.ClientesListaActivity" />
         <activity
             android:name=".activity.UsuarioAdminActivity"
             android:label="Cadastrar Usuário" />
@@ -35,7 +36,7 @@
         <activity
             android:name=".activity.ProdutosActivity"
             android:label="Lista de Produtos"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
             android:label="Aplicativo de Vendas">

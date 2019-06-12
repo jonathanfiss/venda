@@ -1,6 +1,5 @@
 package br.edu.ifsul.vendas.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,49 +16,41 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import br.edu.ifsul.vendas.R;
-import br.edu.ifsul.vendas.adapter.ClientesAdapter;
-import br.edu.ifsul.vendas.model.Cliente;
+import br.edu.ifsul.vendas.adapter.PedidosAdapter;
+import br.edu.ifsul.vendas.model.Pedido;
+import br.edu.ifsul.vendas.setup.AppSetup;
 
-import static br.edu.ifsul.vendas.setup.AppSetup.clientes;
-
-public class ClientesListaActivity extends AppCompatActivity {
-    private ListView lvClientesList;
-    private static final String TAG = "clienteslistaactivity";
-
+public class PedidosActivity extends AppCompatActivity {
+    private ListView lv_pedidos;
+    private static final String TAG = "pedidosactivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_clientes_lista);
+        setContentView(R.layout.activity_pedidos);
 
-        lvClientesList = findViewById(R.id.lv_clientes_list);
-        lvClientesList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lv_pedidos = findViewById(R.id.lv_pedidos);
+        lv_pedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(ClientesListaActivity.this, PedidosActivity.class);
-                intent.putExtra("cliente", position);
-                startActivity(intent);
+
             }
         });
-
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("clientes");
+        DatabaseReference myRef = database.getReference("pedidos");
 
         myRef.orderByChild("nome").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-//                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
-
-                clientes = new ArrayList<>();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Cliente cliente = ds.getValue(Cliente.class);
-                    cliente.setKey(ds.getKey());
-                    clientes.add(cliente);
+                    Pedido pedido = ds.getValue(Pedido.class);
+                    pedido.setKey(ds.getKey());
+                    AppSetup.pedidos.add(pedido);
                 }
 
                 //carrega os dados na View
-                lvClientesList.setAdapter(new ClientesAdapter(ClientesListaActivity.this, clientes));
+                lv_pedidos.setAdapter(new PedidosAdapter(PedidosActivity.this, AppSetup.pedidos));
 
             }
 

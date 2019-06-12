@@ -24,6 +24,7 @@ public class AppSetup {
     public static List<Produto> produtos = new ArrayList<>();
     public static List<Cliente> clientes = new ArrayList<>();
     public static List<ItemPedido> carrinho = new ArrayList<>();
+    public static List<Pedido> pedidos = new ArrayList<>();
     public static Cliente cliente = null;
     public static Pedido pedido = null;
     public static User user = null;

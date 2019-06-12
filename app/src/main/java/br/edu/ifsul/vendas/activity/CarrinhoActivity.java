@@ -39,6 +39,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         setContentView(R.layout.activity_carrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);
@@ -50,7 +51,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 excluiItem(position);
-                return false;
+                return true;
             }
         });
 
@@ -187,7 +188,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                     pedido.setEstado("aberto");
                     pedido.setFormaDePagamento("avista");
                     pedido.setItens(AppSetup.carrinho);
-//                    pedido.setKey(Long.valueOf(key));
+                    pedido.setKey(key);
                     pedido.setSituacao(true);
                     pedido.setTotalPedido(total);
 
@@ -224,6 +225,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     public void atualizaView() {
+        total = 0;
         TextView tvTotalPedidoCarrinho = findViewById(R.id.tvTotalPedidoCarrinho);
         lv_carrinho.setAdapter(new CarrinhoAdapter(CarrinhoActivity.this, AppSetup.carrinho));
         for (ItemPedido itemPedido : AppSetup.carrinho) {
