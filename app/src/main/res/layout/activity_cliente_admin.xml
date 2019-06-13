@@ -1,177 +1,155 @@
-<?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ClienteAdminActivity"
+    tools:layout_editor_absoluteY="81dp"
     android:id="@+id/container_activity_cliente_admin">
 
-<android.support.v4.widget.NestedScrollView
-    android:id="@+id/nestedScrollView"
-    android:layout_width="0dp"
-    android:layout_height="0dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent">
+    <ImageView
+        android:id="@+id/imvFotoClienteTelaAdmin"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/foto_do_produto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/img_cliente_icon_524x524" />
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/etNomeClienteTelaAdmin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/hint_nome"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.052"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCodigoDeBarras_clienteAdmin" />
 
-        <ImageView
-            android:id="@+id/imvFoto"
-            android:layout_width="150dp"
-            android:layout_height="120dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:contentDescription="@string/foto_do_produto"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/img_cliente_icon_524x524" />
+    <EditText
+        android:id="@+id/etSobrenomeClienteTelaAdmin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/hint_sobrenome"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNomeClienteTelaAdmin" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/label_codigo_de_barras"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imvFoto" />
+    <EditText
+        android:id="@+id/etCPFClienteTelaAdmin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:digits="0123456789.-"
+        android:ems="10"
+        android:hint="@string/hint_cpf"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etSobrenomeClienteTelaAdmin" />
 
-        <EditText
-            android:id="@+id/etCodigoCliente"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:ems="10"
-            android:hint="@string/hint_codigo_de_barras"
-            android:inputType="number"
-            app:layout_constraintEnd_toStartOf="@+id/imb_pesquisar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+    <Button
+        android:id="@+id/btSalvarClienteTelaAdmin"
+        android:layout_width="142dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/colorAccent"
+        android:text="@string/bt_salvar"
+        android:textColor="@color/fontColor"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etCPFClienteTelaAdmin"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/label_nome"
-            app:layout_constraintStart_toStartOf="@+id/etCodigoCliente"
-            app:layout_constraintTop_toBottomOf="@+id/etCodigoCliente" />
+    <TextView
+        android:id="@+id/tvCodigoDeBarrasClienteTelaAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/etNomeClienteAdmin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
-            android:hint="@string/hint_nome"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+    <EditText
+        android:id="@+id/etCodigoDeBarras_clienteAdmin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="@string/hint_codigo_de_barras"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/etNomeClienteTelaAdmin"
+        app:layout_constraintEnd_toStartOf="@+id/imbPesquisar_clienteAdmin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imvFotoClienteTelaAdmin" />
 
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/hint_cpf"
-            app:layout_constraintStart_toStartOf="@+id/etNomeClienteAdmin"
-            app:layout_constraintTop_toBottomOf="@+id/etSobrenomeClienteAdmin" />
+    <ImageButton
+        android:id="@+id/imbPesquisar_clienteAdmin"
+        android:layout_width="51dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/etCodigoDeBarras_clienteAdmin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/etCodigoDeBarras_clienteAdmin"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/ic_search_white_24dp" />
 
-        <EditText
-            android:id="@+id/etCPFClienteAdmin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
-            android:hint="@string/hint_cpf"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+    <ProgressBar
+        android:id="@+id/pb_foto_cliente_admin"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/imvFotoClienteTelaAdmin"
+        app:layout_constraintEnd_toEndOf="@+id/imvFotoClienteTelaAdmin"
+        app:layout_constraintStart_toStartOf="@+id/imvFotoClienteTelaAdmin"
+        app:layout_constraintTop_toTopOf="@+id/imvFotoClienteTelaAdmin" />
 
-        <Button
-            android:id="@+id/btInserirClienteAdmin"
-            android:layout_width="142dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="32dp"
-            android:background="@color/colorAccent"
-            android:text="@string/bt_salvar"
-            android:textColor="@color/fontColor"
-            android:textSize="22sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/etCPFClienteAdmin" />
-
-        <ImageButton
-            android:id="@+id/imb_pesquisar"
-            android:layout_width="50dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:background="@color/colorAccent"
-            android:contentDescription="@string/menu_pesquisar"
-            app:layout_constraintBottom_toBottomOf="@+id/etCodigoCliente"
-            app:layout_constraintEnd_toEndOf="@+id/etNomeClienteAdmin"
-            app:layout_constraintStart_toEndOf="@+id/etCodigoCliente"
-            app:layout_constraintTop_toTopOf="@+id/etCodigoCliente"
-            app:srcCompat="@drawable/ic_search_white_24dp" />
-
-        <ProgressBar
-            android:id="@+id/pb_foto_cliente_admin"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@+id/imvFoto"
-            app:layout_constraintEnd_toEndOf="@+id/imvFoto"
-            app:layout_constraintStart_toStartOf="@+id/imvFoto"
-            app:layout_constraintTop_toTopOf="@+id/imvFoto" />
-
-        <EditText
-            android:id="@+id/etSobrenomeClienteAdmin"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:ems="10"
-            android:hint="@string/hint_sobrenome"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/hint_sobrenome"
-            app:layout_constraintStart_toStartOf="@+id/etNomeClienteAdmin"
-            app:layout_constraintTop_toBottomOf="@+id/etNomeClienteAdmin" />
-
-    </android.support.constraint.ConstraintLayout>
-</android.support.v4.widget.NestedScrollView>
+    <Button
+        android:id="@+id/bt_verPedidos"
+        android:layout_width="142dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/bt_ver_pedidos"
+        android:textColor="@color/fontColor"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="@+id/btSalvarClienteTelaAdmin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.746"
+        app:layout_constraintStart_toEndOf="@+id/btSalvarClienteTelaAdmin"
+        app:layout_constraintTop_toTopOf="@+id/btSalvarClienteTelaAdmin"
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>

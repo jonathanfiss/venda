@@ -74,12 +74,12 @@ public class ClienteAdminActivity extends AppCompatActivity {
 
         //mapeia os componentes da UI
         etCodigoDeBarras = findViewById(R.id.etCodigoCliente);
-        etNome = findViewById(R.id.etNomeClienteAdmin);
-        etSobrenome = findViewById(R.id.etSobrenomeClienteAdmin);
-        etCPF = findViewById(R.id.etCPFClienteAdmin);
-        btSalvar = findViewById(R.id.btInserirClienteAdmin);
-        imvFoto = findViewById(R.id.imvFoto);
-        imbPesquisar = findViewById(R.id.imb_pesquisar);
+        etNome = findViewById(R.id.etNomeClienteTelaAdmin);
+        etSobrenome = findViewById(R.id.etSobrenomeClienteTelaAdmin);
+        etCPF = findViewById(R.id.etCPFClienteTelaAdmin);
+        btSalvar = findViewById(R.id.btSalvarClienteTelaAdmin);
+        imvFoto = findViewById(R.id.imvFotoClienteTelaAdmin);
+        imbPesquisar = findViewById(R.id.imbPesquisar_clienteAdmin);
         pbFoto = findViewById(R.id.pb_foto_cliente_admin);
 
         //busca a foto do produto na galeria
