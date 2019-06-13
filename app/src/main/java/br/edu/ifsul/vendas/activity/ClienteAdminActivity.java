@@ -47,7 +47,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
     private static final String TAG = "clienteAdminActivity";
     private static final int RC_BARCODE_CAPTURE = 1, RC_GALERIA_IMAGE_PICK = 2;
     private EditText etCodigoDeBarras, etNome, etSobrenome, etCPF;
-    private Button btSalvar;
+    private Button btSalvar, btPedidos;
     private ImageView imvFoto;
     private Cliente cliente;
     private byte[] fotoCliente = null; //foto do produto
@@ -73,11 +73,12 @@ public class ClienteAdminActivity extends AppCompatActivity {
         cliente = new Cliente();
 
         //mapeia os componentes da UI
-        etCodigoDeBarras = findViewById(R.id.etCodigoCliente);
+        etCodigoDeBarras = findViewById(R.id.etCodigoDeBarras_clienteAdmin);
         etNome = findViewById(R.id.etNomeClienteTelaAdmin);
         etSobrenome = findViewById(R.id.etSobrenomeClienteTelaAdmin);
         etCPF = findViewById(R.id.etCPFClienteTelaAdmin);
         btSalvar = findViewById(R.id.btSalvarClienteTelaAdmin);
+        btPedidos = findViewById(R.id.bt_verPedidos);
         imvFoto = findViewById(R.id.imvFotoClienteTelaAdmin);
         imbPesquisar = findViewById(R.id.imbPesquisar_clienteAdmin);
         pbFoto = findViewById(R.id.pb_foto_cliente_admin);
@@ -130,6 +131,13 @@ public class ClienteAdminActivity extends AppCompatActivity {
                 }else{
                     Snackbar.make(findViewById(R.id.container_activity_cliente_admin), R.string.snack_preencher_todos_campos, Snackbar.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        btPedidos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ClienteAdminActivity.this, PedidosActivity.class));
             }
         });
     }
@@ -335,7 +343,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         pbFoto.setVisibility(ProgressBar.INVISIBLE);
-                        Log.d(TAG, "Download da foto do cliente falhou: " + "cliente" + cliente.getCodigoDeBarras() + ".jpeg");
+                        Log.d(TAG, "Download da foto do cliente falhou: " + "clientes/" + cliente.getCodigoDeBarras() + ".jpeg");
                     }
                 });
             }else{
