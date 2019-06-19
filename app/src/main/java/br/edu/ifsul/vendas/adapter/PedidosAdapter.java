@@ -59,7 +59,7 @@ public class PedidosAdapter extends ArrayAdapter<Pedido>{
 
         holder.nomeProduto.setText(itemPedido.getKey().toString());
         holder.quantidade.setText(itemPedido.getDataCriacao().toString());
-        holder.totalDoItem.setText(NumberFormat.getCurrencyInstance().format(itemPedido.getTotalPedido().toString()));
+        holder.totalDoItem.setText(NumberFormat.getCurrencyInstance().format(itemPedido.getTotalPedido()));
 
         return convertView;
     }
