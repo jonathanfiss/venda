@@ -12,31 +12,46 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.PedidosActivity"></activity>
-        <activity android:name=".activity.ClientesListaActivity" />
+        <activity
+            android:name=".activity.PedidosActivity"
+            android:label="Pedidos">
+        </activity>
+        <activity android:name=".activity.ClientesListaActivity"
+            android:label="Lista de Clientes">
+        </activity>
         <activity
             android:name=".activity.UsuarioAdminActivity"
-            android:label="Cadastrar Usuário" />
+            android:label="Cadastrar Usuário">
+        </activity>
         <activity
             android:name=".activity.ClienteAdminActivity"
-            android:label="Administração Clientes" />
+            android:label="Administração Clientes">
+        </activity>
         <activity
             android:name=".activity.ProdutoAdminActivity"
-            android:label="Administração Produtos" />
+            android:label="Administração Produtos">
+        </activity>
         <activity
             android:name=".activity.SobreActivity"
-            android:label="Sobre" />
+            android:label="Sobre">
+        </activity>
         <activity
             android:name=".activity.CarrinhoActivity"
-            android:label="Carrinho" />
-        <activity android:name=".activity.ProdutoDetalheActivity" />
+            android:label="Carrinho">
+        </activity>
+        <activity
+            android:name=".activity.ProdutoDetalheActivity"
+            android:label="Detalhes do Produto">
+        </activity>
         <activity
             android:name=".activity.ClientesActivity"
-            android:label="Lista de Clientes" />
+            android:label="Lista de Clientes">
+        </activity>
         <activity
             android:name=".activity.ProdutosActivity"
             android:label="Lista de Produtos"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".activity.LoginActivity"
             android:label="Aplicativo de Vendas">
@@ -49,7 +64,8 @@
         </activity>
         <activity
             android:name=".barcode.BarcodeCaptureActivity"
-            android:label="Leitor de código" />
+            android:label="Leitor de código">
+        </activity>
     </application>
 
 </manifest>
