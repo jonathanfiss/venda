@@ -1,8 +1,10 @@
 package br.edu.ifsul.vendas.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.PedidosAdapter;
+import br.edu.ifsul.vendas.barcode.BarcodeCaptureActivity;
 import br.edu.ifsul.vendas.model.Pedido;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
@@ -29,6 +32,10 @@ public class PedidosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pedidos);
 
+        //ativa o botão home na actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         lv_pedidos = findViewById(R.id.lv_pedidos);
         lv_pedidos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -39,7 +46,7 @@ public class PedidosActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("clientes" + AppSetup.cliente.getKey() + "pedidos");
 
-        myRef.orderByChild("nome").addValueEventListener(new ValueEventListener() {
+        myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -60,5 +67,14 @@ public class PedidosActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 }

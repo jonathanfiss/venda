@@ -48,6 +48,10 @@ public class ClientesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientes);
 
+        //ativa o botão home na actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
         lvClientes = findViewById(R.id.lv_clientes);
         lvClientes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -144,6 +148,9 @@ public class ClientesActivity extends AppCompatActivity {
                 intent.putExtra(BarcodeCaptureActivity.AutoFocus, true);
                 intent.putExtra(BarcodeCaptureActivity.UseFlash, false);
                 startActivityForResult(intent, RC_BARCODE_CAPTURE);
+                break;
+            case android.R.id.home:
+                finish();
                 break;
         }
         return true;

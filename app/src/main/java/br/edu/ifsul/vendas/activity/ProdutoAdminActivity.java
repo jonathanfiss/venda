@@ -65,6 +65,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
 
         //ativa o botão home na actionbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //obtém a instância do database
         database = FirebaseDatabase.getInstance();
@@ -92,7 +93,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 //segundo argumento: refina a ação para arquivos de fotoProduto, na galeria do dispositivo, retornando um URI
                 Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 //inicializa uma Activity esperando o seu resultado. Neste caso, uma que forneca acesso a galeria de imagens do dispositivo.
-                startActivityForResult(Intent.createChooser(intent,getString(R.string.titulo_janela_galeria_imagens)), RC_GALERIA_IMAGE_PICK);
+                startActivityForResult(Intent.createChooser(intent, getString(R.string.titulo_janela_galeria_imagens)), RC_GALERIA_IMAGE_PICK);
             }
         });
 
@@ -100,7 +101,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         imbPesquisar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etCodigoDeBarras.getText().toString().isEmpty()){
+                if (!etCodigoDeBarras.getText().toString().isEmpty()) {
                     buscarNoBanco(Long.valueOf(etCodigoDeBarras.getText().toString()));
                 }
             }
@@ -110,11 +111,11 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         btSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!etCodigoDeBarras.getText().toString().isEmpty() &&
+                if (!etCodigoDeBarras.getText().toString().isEmpty() &&
                         !etNome.getText().toString().isEmpty() &&
                         !etDescricao.getText().toString().isEmpty() &&
                         !etValor.getText().toString().isEmpty() &&
-                        !etQuantidade.getText().toString().isEmpty() ){
+                        !etQuantidade.getText().toString().isEmpty()) {
                     //prepara o objeto de modelo
                     Long codigoDeBarras = Long.valueOf(etCodigoDeBarras.getText().toString());
                     produto.setCodigoDeBarras(codigoDeBarras);
@@ -125,13 +126,13 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                     produto.setQuantidade(Integer.valueOf(etQuantidade.getText().toString()));
                     produto.setSituacao(true);
                     Log.d(TAG, "Produto a ser salvo: " + produto);
-                    if(fotoProduto != null){
+                    if (fotoProduto != null) {
                         uploadFotoDoProduto();
-                    }else{
+                    } else {
                         produto.setUrl_foto("");
                         salvarProduto();
                     }
-                }else{
+                } else {
                     Snackbar.make(findViewById(R.id.container_activity_produtoadmin), R.string.snack_preencher_todos_campos, Snackbar.LENGTH_LONG).show();
                 }
 
@@ -159,8 +160,8 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         });
     }
 
-    private void salvarProduto(){
-        if(flagInsertOrUpdate){//insert
+    private void salvarProduto() {
+        if (flagInsertOrUpdate) {//insert
             // obtém a referência do database
             DatabaseReference myRef = database.getReference("produtos");
             Log.d(TAG, "Barcode = " + produto.getCodigoDeBarras());
@@ -169,9 +170,9 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     Log.d(TAG, "dataSnapshot isNoBanco = " + dataSnapshot.getValue());
-                    if(dataSnapshot.getValue() != null){
+                    if (dataSnapshot.getValue() != null) {
                         Toast.makeText(ProdutoAdminActivity.this, R.string.toast_codigo_barras_ja_cadastrado, Toast.LENGTH_SHORT).show();
-                    }else{
+                    } else {
                         showWait();
                         DatabaseReference myRef = database.getReference("produtos");
                         produto.setKey(myRef.push().getKey()); //cria o nó e devolve a key
@@ -200,7 +201,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 }
             });
 
-        }else{ //update
+        } else { //update
             flagInsertOrUpdate = true;
             showWait();
             DatabaseReference myRef = database.getReference("produtos/" + produto.getKey());
@@ -243,7 +244,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menuitem_barcode_admin:
                 // launch barcode activity.
                 Intent intent = new Intent(this, BarcodeCaptureActivity.class);
@@ -276,7 +277,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                 Toast.makeText(this, String.format(getString(R.string.barcode_error),
                         CommonStatusCodes.getStatusCodeString(resultCode)), Toast.LENGTH_SHORT).show();
             }
-        } else if(requestCode == RC_GALERIA_IMAGE_PICK){
+        } else if (requestCode == RC_GALERIA_IMAGE_PICK) {
             if (resultCode == RESULT_OK) {
                 arquivoUri = data.getData();
                 Log.d(TAG, "Uri da fotoProduto: " + arquivoUri);
@@ -302,13 +303,13 @@ public class ProdutoAdminActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "dataSnapshot = " + dataSnapshot.getValue());
-                if(dataSnapshot.getValue() != null){
-                    for(DataSnapshot ds : dataSnapshot.getChildren()){
+                if (dataSnapshot.getValue() != null) {
+                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
                         produto = ds.getValue(Produto.class);
                     }
                     flagInsertOrUpdate = false;
                     carregarView();
-                }else{
+                } else {
                     Toast.makeText(ProdutoAdminActivity.this, getString(R.string.toast_produto_nao_cadastrado), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -327,9 +328,9 @@ public class ProdutoAdminActivity extends AppCompatActivity {
         etDescricao.setText(produto.getDescricao());
         etValor.setText(String.format("%.2f", produto.getValor()));
         etQuantidade.setText(produto.getQuantidade().toString());
-        if(produto.getUrl_foto() != ""){
+        if (produto.getUrl_foto() != "") {
             pbFoto.setVisibility(ProgressBar.VISIBLE);
-            if(AppSetup.cacheProdutos.get(produto.getKey()) == null){
+            if (AppSetup.cacheProdutos.get(produto.getKey()) == null) {
                 StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("produtos/" + produto.getCodigoDeBarras() + ".jpeg");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 mStorageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
@@ -346,7 +347,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
                         Log.d(TAG, "Download da foto do produto falhou: " + "produtos" + produto.getCodigoDeBarras() + ".jpeg");
                     }
                 });
-            }else{
+            } else {
                 imvFoto.setImageBitmap(AppSetup.cacheProdutos.get(produto.getKey()));
                 pbFoto.setVisibility(ProgressBar.INVISIBLE);
             }
@@ -356,6 +357,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
 
     /**
      * Converte um Bitmap em um array de bytes (bytes[])
+     *
      * @param bitmap
      * @return byte[]
      */
@@ -368,7 +370,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
     /*Emite uma ProgressDialog
       Uma caixa com uma mensagem de progressão e uma barra de progressão
     */
-    public void  showWait(){
+    public void showWait() {
         //cria e configura a caixa de diálogo e progressão
         mProgressDialog = new ProgressDialog(ProdutoAdminActivity.this);
         mProgressDialog.setMessage(getString(R.string.message_processando));
@@ -378,7 +380,7 @@ public class ProdutoAdminActivity extends AppCompatActivity {
     }
 
     //Faz Dismiss na ProgressDialog
-    public void dismissWait(){
+    public void dismissWait() {
         mProgressDialog.dismiss();
     }
 
