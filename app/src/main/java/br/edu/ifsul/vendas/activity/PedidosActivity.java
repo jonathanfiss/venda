@@ -16,10 +16,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.PedidosAdapter;
 import br.edu.ifsul.vendas.barcode.BarcodeCaptureActivity;
+import br.edu.ifsul.vendas.model.Cliente;
 import br.edu.ifsul.vendas.model.Pedido;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
@@ -44,33 +46,37 @@ public class PedidosActivity extends AppCompatActivity {
             }
         });
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("clientes" + AppSetup.cliente.getKey() + "pedidos");
+//        DatabaseReference myRef = database.getReference("clientes" + AppSetup.cliente.getKey() + "pedidos");
+        AppSetup.pedidos.clear();
 
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        for (String pedido : AppSetup.cliente.getPedidos()) {
+            if (!pedido.equals(" ")) {
+                DatabaseReference myRef = database.getReference("pedidos").child(pedido);
+                myRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.d("data", String.valueOf(dataSnapshot.getValue(Pedido.class)));
+                        Pedido pedido = dataSnapshot.getValue(Pedido.class);
+                        pedido.setKey(dataSnapshot.getKey());
+                        AppSetup.pedidos.add(pedido);
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    Pedido pedido = ds.getValue(Pedido.class);
-                    pedido.setKey(ds.getKey());
-                    AppSetup.pedidos.add(pedido);
-                }
+                        //carrega os dados na View
+                        lv_pedidos.setAdapter(new PedidosAdapter(PedidosActivity.this, AppSetup.pedidos));
+                    }
 
-                //carrega os dados na View
-                lv_pedidos.setAdapter(new PedidosAdapter(PedidosActivity.this, AppSetup.pedidos));
-
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
             }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
+        }
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
                 break;

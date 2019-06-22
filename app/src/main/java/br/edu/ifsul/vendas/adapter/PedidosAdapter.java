@@ -47,7 +47,7 @@ public class PedidosAdapter extends ArrayAdapter<Pedido>{
         final ViewHolder holder;
 
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.item_carrinho_adapter, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.item_pedido_adapter, parent, false);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         } else {
@@ -57,8 +57,9 @@ public class PedidosAdapter extends ArrayAdapter<Pedido>{
         //bindview
         final Pedido itemPedido = getItem(position);
 
-        holder.nomeProduto.setText(itemPedido.getKey().toString());
-        holder.quantidade.setText(itemPedido.getDataCriacao().toString());
+        holder.nomeProduto.setText(itemPedido.getKey());
+//        holder.quantidade.setText(itemPedido.getDataCriacao().toString());
+        holder.quantidade.setText(String.format("%d %d %d", itemPedido.getDataCriacao().getDate(), itemPedido.getDataCriacao().getDay(),itemPedido.getDataCriacao().getYear()));
         holder.totalDoItem.setText(NumberFormat.getCurrencyInstance().format(itemPedido.getTotalPedido()));
 
         return convertView;

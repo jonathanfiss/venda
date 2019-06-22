@@ -313,6 +313,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
                         cliente = ds.getValue(Cliente.class);
                     }
+                    AppSetup.cliente = cliente;
                     flagInsertOrUpdate = false;
                     carregarView();
                 }else{
