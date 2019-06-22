@@ -64,7 +64,7 @@ public class ClientesActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
 //                Log.d(TAG, "Value is: " + dataSnapshot.getValue());
-
+                AppSetup.clientes.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     Cliente cliente = ds.getValue(Cliente.class);
                     cliente.setKey(ds.getKey());

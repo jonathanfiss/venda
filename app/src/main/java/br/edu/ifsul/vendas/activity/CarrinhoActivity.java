@@ -18,12 +18,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.adapter.CarrinhoAdapter;
 import br.edu.ifsul.vendas.model.ItemPedido;
 import br.edu.ifsul.vendas.model.Pedido;
+import br.edu.ifsul.vendas.model.Produto;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
 
@@ -193,6 +196,13 @@ public class CarrinhoActivity extends AppCompatActivity {
                     pedido.setTotalPedido(total);
 
                     myRef.child(key).setValue(pedido);
+
+                    DatabaseReference myRef2 = database.getReference("clientes");
+                    List<String> pedidos = new ArrayList<>();
+                    pedidos.addAll(AppSetup.cliente.getPedidos());
+                    pedidos.add(key);
+                    AppSetup.cliente.setPedidos(pedidos);
+                    myRef2.child(AppSetup.cliente.getKey()).setValue(AppSetup.cliente);
 
                     AppSetup.cliente = null;
                     AppSetup.carrinho.clear();

@@ -37,7 +37,7 @@ public class PedidosActivity extends AppCompatActivity {
             }
         });
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("pedidos");
+        DatabaseReference myRef = database.getReference("clientes" + AppSetup.cliente.getKey() + "pedidos");
 
         myRef.orderByChild("nome").addValueEventListener(new ValueEventListener() {
             @Override

@@ -1,5 +1,6 @@
 package br.edu.ifsul.vendas.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -30,7 +31,6 @@ import br.edu.ifsul.vendas.setup.AppSetup;
 public class ClientesAdapter extends ArrayAdapter<Cliente> {
 
     private Context context;
-    private List<Cliente> clientes;
     private Bitmap fotoEmBitmap;
     private final String TAG = "clientesadapter";
 
@@ -40,6 +40,8 @@ public class ClientesAdapter extends ArrayAdapter<Cliente> {
         this.context = context;
     }
 
+    @SuppressLint("SetTextI18n")
+    @SuppressWarnings("StatementWithEmptyBody")
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

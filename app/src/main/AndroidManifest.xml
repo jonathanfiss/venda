@@ -16,9 +16,6 @@
             android:name=".activity.PedidosActivity"
             android:label="Pedidos">
         </activity>
-        <activity android:name=".activity.ClientesListaActivity"
-            android:label="Lista de Clientes">
-        </activity>
         <activity
             android:name=".activity.UsuarioAdminActivity"
             android:label="Cadastrar Usuário">

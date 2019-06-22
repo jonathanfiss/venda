@@ -36,10 +36,13 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.edu.ifsul.vendas.R;
 import br.edu.ifsul.vendas.barcode.BarcodeCaptureActivity;
 import br.edu.ifsul.vendas.model.Cliente;
+import br.edu.ifsul.vendas.model.Pedido;
 import br.edu.ifsul.vendas.setup.AppSetup;
 
 public class ClienteAdminActivity extends AppCompatActivity {
@@ -121,6 +124,9 @@ public class ClienteAdminActivity extends AppCompatActivity {
                     cliente.setSobrenome(etSobrenome.getText().toString());
                     cliente.setCpf(etCPF.getText().toString());
                     cliente.setSituacao(true);
+                    List<String> pedidos = new ArrayList<>();
+                    pedidos.add(" ");
+                    cliente.setPedidos(pedidos);
                     Log.d(TAG, "Cliente a ser salvo: " + cliente);
                     if(fotoCliente != null){
                         uploadFotoDoCliente();
