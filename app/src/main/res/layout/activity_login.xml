@@ -15,7 +15,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:contentDescription="@string/contentDescription"
-        android:soundEffectsEnabled="false" />
+        android:soundEffectsEnabled="false"
+        app:srcCompat="@mipmap/ic_launcher_round" />
 
     <EditText
         android:id="@+id/etEmail"
@@ -76,4 +77,5 @@
         android:padding="10dp"
         android:text="@string/esqueceu_senha_tela_login"
         android:textColor="@color/colorPrimaryDark" />
+
 </RelativeLayout>

@@ -42,7 +42,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         setContentView(R.layout.activity_carrinho);
         TextView tvClienteCarinho = findViewById(R.id.tvClienteCarrinho);

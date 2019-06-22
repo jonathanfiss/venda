@@ -68,7 +68,7 @@ public class ClienteAdminActivity extends AppCompatActivity {
 
         //ativa o botão home na actionbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setHomeButtonEnabled(true);
         //obtém a instância do database
         database = FirebaseDatabase.getInstance();
 
