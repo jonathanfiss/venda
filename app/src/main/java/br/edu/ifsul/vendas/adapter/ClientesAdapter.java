@@ -48,36 +48,33 @@ public class ClientesAdapter extends ArrayAdapter<Cliente> {
         //Devolve o objeto do modelo
         final Cliente cliente = getItem(position);
 
+        final ViewHolder holder;
         //infla a view
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(R.layout.item_cliente_adapter, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        //mapeia os componentes da UI para vincular os dados do objeto de modelo
-        TextView tvNome = convertView.findViewById(R.id.tvNomeClientesAdapter);
-        TextView tvCPF = convertView.findViewById(R.id.tvCPFItemAdapter);
-        final ImageView imvFoto = convertView.findViewById(R.id.imvFotoClienteAdapter);
-        final ProgressBar pbFotoCliente = convertView.findViewById(R.id.pb_foto_clientes_adapter);
-
-
-        //vincula os dados do objeto de modelo à view
-        tvNome.setText(cliente.getNome().concat(" " + cliente.getSobrenome()));
-//        tvNome.setText(cliente.getNome());
-        tvCPF.setText(cliente.getCpf());
-        if (cliente.getUrl_foto() != null) {
-            pbFotoCliente.setVisibility(ProgressBar.INVISIBLE);
-        } else {
-            //faz o download do servidor
-            if(AppSetup.cacheClientes.get(cliente.getKey()) == null){
+        holder.tvNome.setText(cliente.getNome());
+        holder.tvCPF.setText(cliente.getCpf());
+        holder.pbFotoProduto.setVisibility(ProgressBar.VISIBLE);
+        holder.imvFoto.setImageResource(R.drawable.img_cliente_icon_524x524);
+        if (cliente.getUrl_foto().equals("")){
+            holder.pbFotoProduto.setVisibility(ProgressBar.INVISIBLE);
+        }else{
+            if (AppSetup.cacheClientes.get(cliente.getKey()) == null){
                 StorageReference mStorageRef = FirebaseStorage.getInstance().getReference("clientes/" + cliente.getCodigoDeBarras() + ".jpeg");
                 final long ONE_MEGABYTE = 1024 * 1024;
                 mStorageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
                     public void onSuccess(byte[] bytes) {
                         fotoEmBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        imvFoto.setImageBitmap(fotoEmBitmap);
+                        holder.imvFoto.setImageBitmap(fotoEmBitmap);
                         AppSetup.cacheClientes.put(cliente.getKey(), fotoEmBitmap);
-                        pbFotoCliente.setVisibility(ProgressBar.INVISIBLE);
+                        holder.pbFotoProduto.setVisibility(ProgressBar.INVISIBLE);
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -85,13 +82,27 @@ public class ClientesAdapter extends ArrayAdapter<Cliente> {
                         Log.d(TAG, "Download da foto do cliente falhou: " + "clientes/" + cliente.getCodigoDeBarras() + ".jpeg");
                     }
                 });
-            }else{
-                imvFoto.setImageBitmap(AppSetup.cacheClientes.get(cliente.getKey()));
-                pbFotoCliente.setVisibility(ProgressBar.INVISIBLE);
+            }else {
+                holder.imvFoto.setImageBitmap(AppSetup.cacheClientes.get(cliente.getKey()));
+                holder.pbFotoProduto.setVisibility(ProgressBar.INVISIBLE);
             }
         }
-
-
         return convertView;
+    }
+
+    private class ViewHolder {
+
+        final TextView tvNome;
+        final TextView tvCPF;
+        final ImageView imvFoto;
+        final ProgressBar pbFotoProduto;
+
+        public ViewHolder(View view) {
+            //mapeia os componentes da UI para vincular os dados do objeto de modelo
+            tvNome = view.findViewById(R.id.tvNomeClientesAdapter);
+            tvCPF = view.findViewById(R.id.tvCPFItemAdapter);
+            imvFoto = view.findViewById(R.id.imvFotoClienteAdapter);
+            pbFotoProduto = view.findViewById(R.id.pb_foto_clientes_adapter);
+        }
     }
 }
