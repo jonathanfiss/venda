@@ -82,7 +82,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             case R.id.menuitem_cancelar:
                 confirmaCancelar();
                 break;
-            case R.id.home:
+            case android.R.id.home:
                 finish();
                 break;
         }
