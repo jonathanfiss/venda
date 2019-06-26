@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -43,6 +44,10 @@ public class UsuarioAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario_admin);
+
+        //ativa o botão home na actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //obtém a instância do serviço de autenticação
         mAuth = FirebaseAuth.getInstance();
@@ -117,6 +122,15 @@ public class UsuarioAdminActivity extends AppCompatActivity {
         AppSetup.user = user;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
 //    private void sendEmailVerification() {
 //        final FirebaseUser user = mAuth.getCurrentUser();
 //        user.sendEmailVerification()

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,6 +31,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.NumberFormat;
 
 import br.edu.ifsul.vendas.R;
+import br.edu.ifsul.vendas.barcode.BarcodeCaptureActivity;
 import br.edu.ifsul.vendas.model.ItemPedido;
 import br.edu.ifsul.vendas.model.Produto;
 import br.edu.ifsul.vendas.setup.AppSetup;
@@ -51,6 +53,10 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produto_detalhe);
+
+        //ativa o botão home na actionbar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
         //mapeia os componentes da UI
         tvNome = findViewById(R.id.tvNomeProduto);
@@ -148,5 +154,14 @@ public class ProdutoDetalheActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 }
